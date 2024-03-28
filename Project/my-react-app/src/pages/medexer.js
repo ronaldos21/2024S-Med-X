@@ -67,39 +67,42 @@ const Medexer = () => {
         const mbSize = bytes / (1024 * 1024);
         return mbSize.toFixed(2) + ' MB';
     };
-
-    const uploadImage = () => { //upload function that talks to storage service
-        if (uploadedImage == null) return; //if nothing has been uploaded, continue
-        setIsLoading(true); //setting loading to true before uploaded image
-        const imageRef = ref(storage, `images/${uploadedImage.name + v4()}`); //name of image + randomized code to make submissions unique
-        uploadBytes(imageRef, uploadedImage).then((snapshot) => { //translate image into bytes and send alert
+    const uploadImage = () => {
+        if (uploadedImage == null) return;
+        setIsLoading(true);
+        const imageRef = ref(storage, `images/${uploadedImage.name + v4()}`);
+        uploadBytes(imageRef, uploadedImage).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                handlePredict(url)
-            })
-            alert("image uploaded");
-            setIsLoading(false); //set loading to false after uploaded image
+                handlePredict(url);
+            }).catch(error => {
+                setIsLoading(false); // Set loading to false in case of error
+                console.error("Error getting download URL:", error);
+            });
+            // No need to set loading to false here because it's set in the getDownloadURL promise
+        }).catch(error => {
+            setIsLoading(false); // Set loading to false in case of error
+            console.error("Error uploading image:", error);
         });
-  };
-
+    };
+    
     const handlePredict = async (imageURL) => {
-
         try {
             const response = await fetch(`http://localhost:5001/predict?image_url=${encodeURIComponent(imageURL)}`);
-
+    
             if (!response.ok) {
                 throw new Error('Failed to fetch');
             }
-
+    
             const data = await response.json();
-
+    
             setFinding(data.prediction);
             history("/report", { state: { result: data.prediction, img: imageURL } });
-            // setError('');
         } catch (error) {
-            // setError('Error occurred while fetching data');
-            console.error(error);
+            setIsLoading(false); // Set loading to false in case of error
+            console.error('Error occurred while fetching data:', error);
         }
     };
+    
 
     return (
         <div className='w-full h-full flex flex-col justify-center items-center'>

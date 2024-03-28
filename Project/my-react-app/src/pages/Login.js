@@ -13,6 +13,7 @@ const Login = () => {
     signInWithEmailAndPassword(auth, "afernandez@gmail.com", "123456")
       .then((userCredential) => {
         const user = userCredential.user;
+
         setUser(user);
         
       })

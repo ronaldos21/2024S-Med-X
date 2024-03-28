@@ -50,7 +50,9 @@ const ReportGallery = () => {
                             </div>
                             <div className="Frame33 justify-start items-center  inline-flex flex-col gap-1">
                                 <div className="Details text-white text-base font-normal ">
-                                    #{report.id}</div>
+                                    #{report.id}</div> 
+                                    <div className="Details text-customPurple text-base font-normal ">
+                                    {report.data.medical_term}</div>
                                 <div className='text-emerald-300'>{
                                         report
                                             .data
