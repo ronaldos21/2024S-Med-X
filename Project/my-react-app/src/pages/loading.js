@@ -29,7 +29,7 @@ function Loading(props) {
 
     return (
         <motion.div
-            className="fixed bg-black top-0 left-0 w-full h-full flex justify-center items-center z-10"
+            className="fixed bg-black top-0 left-0 w-full h-full flex justify-center items-center z-50"
             animate={controls}
         >
             <div className="p-4 rounded-md">

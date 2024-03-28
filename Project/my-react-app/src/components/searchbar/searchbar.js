@@ -60,7 +60,7 @@ const Searchbar = () => {
     };
 
     return (
-        <form className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex z-50">
+        <form className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex z-40">
             {/* X-ray data section */}
            
 
