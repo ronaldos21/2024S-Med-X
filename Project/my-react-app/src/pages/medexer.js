@@ -3,7 +3,7 @@ import Uploadimg from "../components/img/upload.png";
 import storage from "../firebase.js";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; /*explain this*/
 import Loading from './loading.js';
 
 

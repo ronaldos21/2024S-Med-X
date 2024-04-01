@@ -1,9 +1,9 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom"; /*explain this*/
 const Report = () => {
-  const location = useLocation();
-  const result = location.state.result;
-  const url = location.state.img;
+  const location = useLocation(); /*explain this*/
+  const result = location.state.result; /*explain this*/
+  const url = location.state.img; /*explain this*/
 
 
   const currentDate = new Date();
