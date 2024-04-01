@@ -9,7 +9,7 @@ import { TbReportMedical } from "react-icons/tb";
 
 const Navbar = () => {// Access user from AuthContext
 
-    const [isDashboardActive, setIsDashboardActive] = useState(false);
+    const [isDashboardActive, setIsDashboardActive] = useState(true);
     const [isMedexerActive, setIsMedexerActive] = useState(false);
     const [isReportActive, setIsReportActive] = useState(false);
     const [isImagesActive, setIsImagesActive] = useState(false);
