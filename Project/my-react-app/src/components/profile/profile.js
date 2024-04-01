@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
 import { useAuth } from '../../components/session/AuthContext'; 
 import { db } from '../../firebase';
-
+import { useNavigate } from 'react-router-dom';
 import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
 
 const Profile = () => {
+    const navigate = useNavigate();
     const [loggedinuser, setloggedinuser] = useState([]);
     const { user } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -29,6 +30,8 @@ const Profile = () => {
         signOut(auth)
             .then(() => {
                 console.log("User signed out successfully.");
+                navigate('/', { replace: true });
+                window.location.reload();
             })
             .catch((error) => {
                 console.error("Error occurred while signing out:", error);

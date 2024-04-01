@@ -5,9 +5,11 @@ import { useAuth } from '../components/session/AuthContext'; // Import useAuth h
 import Devider from  '../components/img/image 3.png'
 import Doctor from '../components/img/doctor il.png'
 import Patient from '../components/img/patient il.png'
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const { setUser } = useAuth(); // Access setUser from AuthContext
 
+  const navigate = useNavigate();
   const signIn = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, "afernandez@gmail.com", "123456")
@@ -15,7 +17,7 @@ const Login = () => {
         const user = userCredential.user;
 
         setUser(user);
-        
+        navigate('/', { replace: true });
       })
       .catch((error) => {
         const errorCode = error. code;
