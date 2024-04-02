@@ -16,7 +16,7 @@ const Dashboard = () => {
                 const q = query(scansRef, where("p_id", "==", user.uid), orderBy('scan_date', 'desc'), limit(1));
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach(doc => {
-                    setLastScan(doc.data());
+                    setLastScan({ id: doc.id, ...doc.data() }); // Include the document ID in the state
                 });
             } catch (error) {
                 console.error("Error fetching last scan:", error);
@@ -48,7 +48,7 @@ const Dashboard = () => {
                 </div>
                 <div className="grow shrink basis-0 self-stretch flex-col justify-center items-center gap-5 inline-flex">
                     <div className="w-1/2 self-stretch h-12 justify-between items-center inline-flex">
-                        <div className="text-center text-white text-3xl font-normal font-['Inter']">Results</div>
+                        <div className="text-center text-white text-3xl font-normal font-['Inter']">Report #{lastScan ? lastScan.id : ""}</div>
                         <div className="text-customGreen font-normal font-['Inter']">{lastScan ? lastScan.scan_date.toDate().toLocaleString() : ""}</div>
                     </div>
                     <div className="self-stretch flex-col justify-start items-start flex">
@@ -56,13 +56,12 @@ const Dashboard = () => {
                         <div className="self-stretch text-justify text-white font-normal font-['Inter'] text-wrap w-1/2">{lastScan ? lastScan.medical_term_description : ""}</div>
                     </div>
                     <div className="self-stretch flex-col justify-start items-start flex gap-5">
-    <div className="text-center text-white text-xl font-normal font-['Inter']">Doctors Message:</div>
-    <div className="self-stretch text-justify text-white font-normal font-['Inter'] text-wrap w-1/2">
-        {lastScan && lastScan.mp_comment !== "" ? lastScan.mp_comment : "the report is yet to be reviewed"}
-    </div>
-    <StatusButton status={lastScan.status}/>
-</div>
-
+                        <div className="text-center text-white text-xl font-normal font-['Inter']">Doctors Message:</div>
+                        <div className="self-stretch text-justify text-white font-normal font-['Inter'] text-wrap w-1/2">
+                            {lastScan && lastScan.mp_comment !== "" ? lastScan.mp_comment : "the report is yet to be reviewed"}
+                        </div>
+                        <StatusButton status={lastScan.status}/>
+                    </div>
                 </div>
             </div>
         </div>
