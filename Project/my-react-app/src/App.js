@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Main from './components/main/main.js';
 import Login from './pages/Login.js';
+import DoctorLogin from './test/DoctorLogin.js';
 import { AuthProvider } from './components/session/AuthContext.js';
 import { auth } from './firebase.js'; // Import auth from firebase.js
 
@@ -19,7 +20,7 @@ function App() {
     return (
         <AuthProvider>
             <div className="App overflow-y-scroll no-scrollbar">
-                {user ? <Main user={user} /> : <Login/>} {/* Pass user to Main component */}
+                {user ? <Main user={user} /> : <DoctorLogin/>} {/* Pass user to Main component Login was here*/} 
             </div>
         </AuthProvider>
     );
