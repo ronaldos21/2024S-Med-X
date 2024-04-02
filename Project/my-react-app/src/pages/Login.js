@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import React from 'react';
 import Logo from '../components/img/Logo.png';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -7,9 +6,9 @@ import Devider from  '../components/img/image 3.png'
 import Doctor from '../components/img/doctor il.png'
 import Patient from '../components/img/patient il.png'
 import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
-  const { setUser } = useAuth(); // Access setUser from AuthContext
-  const [userType, setUserType] = useState(null); // State to track user type
+  const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
 
   const navigate = useNavigate();
   const signInAs = (email, password, type) => {
@@ -26,6 +25,7 @@ const Login = () => {
         const errorMessage = error.message;
       });
   };
+
   const signInAsDoctor = () => {
     signInAs("patricia.normann@presbytarian.org", "3451231", "doctor");
   };
@@ -33,6 +33,7 @@ const Login = () => {
   const signInAsPatient = () => {
     signInAs("afernandez@gmail.com", "123456", "patient");
   };
+
   return (
     <div className="Preview w-full h-screen flex-col justify-center items-center gap-2.5 inline-flex bg-primary">
       <div className="Logo flex-col justify-start items-start gap-7 flex">

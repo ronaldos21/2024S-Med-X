@@ -8,7 +8,8 @@ const Dashboard = () => {
     const [lastScan, setLastScan] = useState(null);
     const [loading, setLoading] = useState(true); // Loading state
 
-    const { user } = useAuth();
+    const { user,userType } = useAuth();
+    console.log(userType)
     useEffect(() => {
         const fetchLastScan = async () => {
             try {
