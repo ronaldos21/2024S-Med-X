@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { useAuth } from '../components/session/AuthContext';
-
 import { collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
 import StatusButton from '../components/button/StatusButton';
 
