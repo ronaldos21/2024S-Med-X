@@ -7,6 +7,7 @@ import { useAuth } from '../components/session/AuthContext';
 
 const ReportGallery = () => {
     const [reports, setReports] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -35,34 +36,52 @@ const ReportGallery = () => {
         fetchReports();
     }, [user, navigate]); // Fetch reports whenever user or navigate changes
 
+    // Calculate total number of pages
+    const totalPages = Math.ceil(reports.length / 5);
+
+    // Slice the reports array based on current page
+    const startIndex = (currentPage - 1) * 7;
+    const endIndex = currentPage * 7;
+    const currentReports = reports.slice(startIndex, endIndex);
+
+    const handleNextPage = () => {
+        setCurrentPage(prevPage => prevPage + 1);
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage(prevPage => prevPage - 1);
+    };
+
     return (
         <div className="Frame31 w-full h-full p-7 flex-col justify-start items-start gap-2.5 inline-flex">
-            <div className="Report text-white text-5xl font-normal ">Reports</div>
-            <div className="Gallery self-stretch grow shrink basis-0 p-5 justify-start items-start inline-flex gap-5">
-                {reports.map((report) => (
+            <div className="Report text-white text-5xl font-normal">Reports</div>
+            <div className="Gallery flex justify-start items-start flex-wrap gap-2 p-2 ">
+                {currentReports.map((report) => (
                     <div
                         key={report.id}
                         className="Frame34 flex-col justify-start items-center inline-flex gap-5 bg-primary p-5 rounded-[10px]"
                     >
-                        <div className="Frame32 w-48 h-72 flex-col justify-start items-center flex ">
+                        <div className="Frame32 w-32 h-48 flex-col justify-start items-center flex ">
                             <img
-                                className="Image3 self-stretch grow shrink basis-0 rounded-2xl"
+                                className="Image3 object-cover w-full h-full rounded-2xl"
                                 src={report.data.xr_image}
                                 alt="Report Image"
                             />
                         </div>
                         <div className="Frame33 justify-start items-center  inline-flex flex-col gap-1">
-                            <div className="Details text-white text-base font-normal ">#{report.id}</div>
-                            <div className="Details text-customPurple text-base font-normal ">
+                            <div className="Details text-white text-base font-normal">#{report.id}</div>
+                            <div className="Details text-customPurple text-base font-normal">
                                 {report.data.medical_term}
                             </div>
-                            <div className='text-emerald-300'>
-                                {report.data.scan_date.toDate().toLocaleString()}
-                            </div>
-                            <StatusButton status={report.data.status} />
                         </div>
                     </div>
                 ))}
+            </div>
+            {/* Pagination controls */}
+            <div className="w-full flex justify-center items-center text-white gap-3">
+                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                <span>{currentPage} / {totalPages}</span>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages} >Next</button>
             </div>
         </div>
     );
