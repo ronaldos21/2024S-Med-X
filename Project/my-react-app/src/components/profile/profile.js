@@ -2,7 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import ProfileIcon from '../img/Profile.png';
 import { FaChevronDown } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { getAuth, signOut } from "firebase/auth";
+import { useAuth } from '../../components/session/AuthContext'; 
+import { db } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
+import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
+
 const Profile = () => {
+    const navigate = useNavigate();
+    const [loggedinuser, setloggedinuser] = useState([]);
+    const { user } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -15,7 +24,20 @@ const Profile = () => {
             setIsDropdownOpen(false);
         }
     };
-    //event listener to close list of options from Chevronicon when clicking somewhere else and not just on the Chevronicon
+
+    const handleLogout = () => {
+        const auth = getAuth();
+        signOut(auth)
+            .then(() => {
+                console.log("User signed out successfully.");
+                navigate('/', { replace: true });
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error("Error occurred while signing out:", error);
+            });
+    };
+
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
@@ -23,7 +45,25 @@ const Profile = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (user) {
+            const fetchPatientData = async () => {
+                try {
+                    const patientDoc = doc(db, 'Patient', user.uid); // Assuming user.uid is the document name
+                    const patientSnap = await getDoc(patientDoc);
+                    if (patientSnap.exists()) {
+                        setloggedinuser([{ id: patientSnap.id, ...patientSnap.data() }]);
+                    } else {
+                        console.log("Patient document not found.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching patient data:", error);
+                }
+            };
 
+            fetchPatientData();
+        }
+    }, [user]);
 
     return (
         <div className="relative h-full" ref={dropdownRef}>
@@ -36,13 +76,19 @@ const Profile = () => {
             </div>
             {isDropdownOpen && (
                 <div className="absolute top-full right-2 mt-1  w-48 bg-primary shadow-lg rounded-lg">
-                    {/* Dropdown content here */}
                     <ul >
+                      
+                        {loggedinuser.map(patient => (
+                            <li key={patient.id} className="py-2 px-4 hover:bg-secondary rounded-lg text-white">
+                                <p>{patient.p_name}</p> {/* Assuming 'p_name' is a field in the patient document */}
+                                <p>{patient.p_number}</p> {/* Assuming 'p_number' is a field in the patient document */}
+                            </li>
+                        ))}
                         <li className="py-2 px-4 hover:bg-secondary rounded-lg text-white">
-                            <Link >Option 1</Link>
+                            <button className="LogoutButton text-white text-lg bg-red-600 px-4 py-2 rounded-md" onClick={handleLogout}>
+                                Logout
+                            </button>
                         </li>
-                        <li className="py-2 px-4 hover:bg-secondary rounded-lg text-white">   <Link >Option 2</Link></li>
-                        <li className="py-2 px-4 hover:bg-secondary rounded-lg text-white">   <Link >Option 3</Link></li>
                     </ul>
                 </div>
             )}

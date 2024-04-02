@@ -7,7 +7,7 @@ import Medexer from "../../pages/medexer";
 import Report from "../../pages/report";
 import { Routes, Route } from "react-router-dom";
 import Images from "../../pages/images";
-import APItest from "../../pages/apitest";
+import ReportGallery from "../../pages/reportgallery";
 
 const Submain = () => {
     return (
@@ -17,8 +17,8 @@ const Submain = () => {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/medexer" element={<Medexer />} /> 
                 <Route path="/report" element={<Report />} />
+                <Route path="/reportgall" element={<ReportGallery />} />
                 <Route path="/images" element={<Images />} />
-                <Route path="/apitest" element={<APItest />} />
             </Routes>
             <Footer/>
         </div>
