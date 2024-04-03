@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { useAuth } from '../components/session/AuthContext';
@@ -5,11 +6,11 @@ import { collection, query, orderBy, limit, getDocs, where } from 'firebase/fire
 import StatusButton from '../components/button/StatusButton';
 
 const Dashboard = () => {
-    const [lastScan, setLastScan] = useState(null);
-    const [loading, setLoading] = useState(true); // Loading state
+    const { userType, user } = useAuth();
 
-    const { user,userType } = useAuth();
-    console.log(userType)
+    const [lastScan, setLastScan] = useState(null);
+    const [loading, setLoading] = useState(true); // Loading state  
+
     useEffect(() => {
         const fetchLastScan = async () => {
             try {
@@ -27,14 +28,15 @@ const Dashboard = () => {
         };
 
         fetchLastScan();
-    }, []);
+    }, [user.uid]);
 
     if (loading) {
         return <div className='h-full w-full text-white inline-flex justify-center items-center'>Loading...</div>; // Render loading indicator
     }
 
-    return (
-        <div className="h-full flex-col inline-flex gap-10 pl-5 pr-5 pt-5">
+    if (userType === "patient") {
+        return (
+            <div className="h-full flex-col inline-flex gap-10 pl-5 pr-5 pt-5">
             <div className='flex-col items-start inline-flex gap-5'>
                 <div className="text-center text-white text-4xl font-normal font-['Inter']">Dashboard</div>
             </div>
@@ -66,7 +68,18 @@ const Dashboard = () => {
                 </div>
             </div>
         </div>
-    );
+        );
+    } else if (userType === "doctor") {
+        return (
+            <div className="h-full flex-col inline-flex gap-10 pl-5 pr-5 pt-5">
+                {/* Render doctor dashboard */}
+                hi doctor
+            </div>
+        );
+    } else {
+        // Handle other user types or invalid cases
+        return null;
+    }
 };
 
 export default Dashboard;
