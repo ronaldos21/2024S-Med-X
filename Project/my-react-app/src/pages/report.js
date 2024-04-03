@@ -7,7 +7,7 @@ import { useAuth } from '../components/session/AuthContext';
 import { Timestamp } from "firebase/firestore";
 
 const Report = () => {
-  const { userType, user } = useAuth();
+  const { user, userType } = useAuth();
   const location = useLocation();
   const result = location.state.result;
   const url = location.state.img;
@@ -34,41 +34,43 @@ const Report = () => {
         const nextId = String(numReports).padStart(5, '0');
 
         // Construct the document path and set the data
-        let data = {
-            xr_image: url,
-            scan_date: formattedDate,
-            medical_term: result,
-            status: "0",
-            mp_comment: "",
-            mp_review_date: "",
-            medical_description: "",
-            h_id: ""
-        };
+        // insert data as per the logged in user if user is mp mp_id: user.uid and if user is patient p_id:user.uid @ronaldos21 
+         let reportData = {
+          xr_image: url,
+          scan_date: formattedDate,
+          medical_term: result,
+          status: "0",
+          mp_comment: "",
+          mp_review_date: "",
+          medical_description: "",
+      };
 
-        if (userType === "doctor") {
-            data = {
-                ...data,
-                p_id: "", // Empty string for patient ID
-                mp_id: user.uid // Set medical professional ID as user ID
-            };
-        } else if (userType === "patient") {
-            data = {
-                ...data,
-                p_id: user.uid, // Set patient ID as user ID
-                mp_id: "" // Empty string for medical professional ID
-            };
-        }
+      // Check userType to decide whether to associate the report with mp_id or p_id
+      if (userType === "doctor") {
+          reportData = {
+              ...reportData,
+              mp_id: user.uid, // Set medical professional ID as user ID
+              p_id: "", // Empty string for patient ID
+          };
+      } else if (userType === "patient") {
+          reportData = {
+              ...reportData,
+              mp_id: "", // Empty string for medical professional ID
+              p_id: user.uid, // Set patient ID as user ID
+          };
+      }
 
-        const reportDocRef = doc(db, 'X-ray', nextId);
-        await setDoc(reportDocRef, data);
+      // Add the report data to Firestore
+      const reportDocRef = doc(db, 'X-ray', nextId);
+      await setDoc(reportDocRef, reportData);
 
-        console.log("Report added successfully to Firestore.");
-        setNextReportId(nextId); // Update the nextReportId state
-        setShowPopup(true); // Show the popup
-    } catch (err) {
-        console.error("Error adding report to Firestore:", err);
-        alert(err);
-    }
+      console.log("Report added successfully to Firestore.");
+      setNextReportId(nextId); // Update the nextReportId state
+      setShowPopup(true); // Show the popup
+  } catch (err) {
+      console.error("Error adding report to Firestore:", err);
+      alert(err);
+  }
 };
 
 

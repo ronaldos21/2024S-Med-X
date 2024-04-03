@@ -7,31 +7,24 @@ import Doctor from '../components/img/doctor il.png'
 import Patient from '../components/img/patient il.png'
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
+const DoctorLogin = () => {
+  const { setUser } = useAuth(); // Access setUser from AuthContext
 
   const navigate = useNavigate();
-  const signInAs = (email, password, type) => {
+  const signIn = () => {
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, "patricia.normann@presbytarian.org", "3451231")
       .then((userCredential) => {
         const user = userCredential.user;
+
         setUser(user);
-        setUserType(type); // Set the user type after successful sign-in
         navigate('/', { replace: true });
       })
       .catch((error) => {
-        const errorCode = error.code;
+        const errorCode = error. code;
         const errorMessage = error.message;
+        console.error(errorCode, errorMessage);
       });
-  };
-
-  const signInAsDoctor = () => {
-    signInAs("patricia.normann@presbytarian.org", "3451231", "doctor");
-  };
-
-  const signInAsPatient = () => {
-    signInAs("afernandez@gmail.com", "123456", "patient");
   };
 
   return (
@@ -44,14 +37,14 @@ const Login = () => {
       </div>
       <div className="Content self-stretch h-96  flex-col justify-center items-center gap-5 flex">
         <div className="Select self-stretch justify-between items-center inline-flex">
-          <div className="Doctor grow shrink basis-0 self-stretch px-5 py-2.5 flex-col justify-center items-center gap-2.5 inline-flex" onClick={signInAsDoctor}>
+          <div className="Doctor grow shrink basis-0 self-stretch px-5 py-2.5 flex-col justify-center items-center gap-2.5 inline-flex"  onClick={signIn}>
             <img className="Image2 w-48 h-72" src={Doctor} alt="Doctor" />
             <div className="Doctor text-white text-4xl font-normal font-['Inter']">Doctor</div>
           </div>
           <div className="Divider p-2.5 justify-center items-center gap-2.5 flex">
             <img className="Image3 w-48 h-72" src={Devider} alt="Divider" />
           </div>
-          <div className="Patient grow shrink basis-0 self-stretch p-2.5 flex-col justify-end items-center gap-5 inline-flex" onClick={signInAsPatient}>
+          <div className="Patient grow shrink basis-0 self-stretch p-2.5 flex-col justify-end items-center gap-5 inline-flex">
             <img className="Image1 w-48 h-72" src={Patient} alt="Patient" />
             <div className="Patient text-white text-4xl font-normal font-['Inter']">Patient</div>
           </div>
@@ -61,4 +54,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default DoctorLogin;
