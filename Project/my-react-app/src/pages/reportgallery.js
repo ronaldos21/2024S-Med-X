@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; //useLocation
 import { db } from '../firebase'; // Import your Firebase configuration
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import StatusButton from '../components/button/StatusButton';
+//import StatusButton from '../components/button/StatusButton';
 import { useAuth } from '../components/session/AuthContext';
 
 const ReportGallery = () => {
     const [reports, setReports] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const { user } = useAuth();
+    const { user, userType } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +20,14 @@ const ReportGallery = () => {
         const fetchReports = async () => {
             try {
                 const reportsRef = collection(db, 'X-ray');
-                const q = query(reportsRef, where("p_id", "==", user.uid));
+                let q;
+                if (userType === 'doctor') {
+                    // Fetch reports associated with the doctor
+                    q = query(reportsRef);
+                } else if (userType === 'patient') {
+                    // Fetch reports associated with the patient
+                    q = query(reportsRef, where("p_id", "==", user.uid));
+                }
                 const querySnapshot = await getDocs(q);
                 const fetchedReports = [];
                 querySnapshot.forEach((doc) => {
@@ -34,7 +41,7 @@ const ReportGallery = () => {
         };
 
         fetchReports();
-    }, [user, navigate]); // Fetch reports whenever user or navigate changes
+    }, [user, userType, navigate]); // Fetch reports whenever user, userType, or navigate changes
 
     // Calculate total number of pages
     const totalPages = Math.ceil(reports.length / 7);
@@ -65,7 +72,7 @@ const ReportGallery = () => {
                             <img
                                 className="Image3 object-cover w-full h-full rounded-2xl"
                                 src={report.data.xr_image}
-                                alt="Report Image"
+                                alt="Report_image"
                             />
                         </div>
                         <div className="Frame33 justify-start items-center  inline-flex flex-col gap-1">
