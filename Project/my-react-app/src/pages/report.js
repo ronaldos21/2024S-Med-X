@@ -22,40 +22,6 @@ const Report = () => {
   const formattedDate = Timestamp.fromDate(currentDate);
 
   // Function to insert data into Firestore
-  // const addReportToFirestore = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     // Fetch the number of existing reports
-  //     const reportsRef = collection(db, 'X-ray');
-  //     const reportsSnapshot = await getDocs(reportsRef);
-  //     const numReports = reportsSnapshot.size;
-
-  //     // Generate the next report ID
-  //     const nextId = String(numReports).padStart(5, '0');
-
-  //     // Construct the document path and set the data
-  //     const reportDocRef = doc(db, 'X-ray', nextId);
-  //     await setDoc(reportDocRef, {
-  //       p_id: user.uid,
-  //       xr_image: url,
-  //       scan_date: formattedDate,
-  //       medical_term: result,
-  //       status:"0",
-  //       mp_comment:"",
-  //       mp_id:"",
-  //       mp_review_date:"",
-  //       medical_description:"",
-  //       h_id:""
-  //     });
-
-  //     console.log("Report added successfully to Firestore.");
-  //     setNextReportId(nextId); // Update the nextReportId state
-  //     setShowPopup(true); // Show the popup
-  //   } catch (err) {
-  //     console.error("Error adding report to Firestore:", err);
-  //     alert(err);
-  //   }
-  // };
   const addReportToFirestore = async (e) => {
     e.preventDefault();
     try {
