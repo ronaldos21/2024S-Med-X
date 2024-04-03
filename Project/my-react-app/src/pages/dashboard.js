@@ -3,7 +3,6 @@ import { db } from '../firebase';
 import { useAuth } from '../components/session/AuthContext';
 import { collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
 import StatusButton from '../components/button/StatusButton';
-import ReportGallery from './reportgallery';
 
 const Dashboard = () => {
     const { userType, user } = useAuth();
