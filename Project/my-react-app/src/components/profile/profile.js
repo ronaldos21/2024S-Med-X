@@ -3,7 +3,7 @@ import ProfileIcon from '../img/Profile.png';
 import { FaChevronDown } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
-import { useAuth } from '../../components/session/AuthContext'; 
+import { useAuth } from '../../components/session/AuthContext';
 import { db } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
@@ -11,7 +11,7 @@ import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
 const Profile = () => {
     const navigate = useNavigate();
     const [loggedinuser, setloggedinuser] = useState([]);
-    const { user } = useAuth();
+    const { userType, user } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -31,7 +31,9 @@ const Profile = () => {
             .then(() => {
                 console.log("User signed out successfully.");
                 navigate('/', { replace: true });
-                window.location.reload();
+                window
+                    .location
+                    .reload();
             })
             .catch((error) => {
                 console.error("Error occurred while signing out:", error);
@@ -47,23 +49,35 @@ const Profile = () => {
 
     useEffect(() => {
         if (user) {
-            const fetchPatientData = async () => {
+            const fetchData = async () => {
                 try {
-                    const patientDoc = doc(db, 'Patient', user.uid); // Assuming user.uid is the document name
-                    const patientSnap = await getDoc(patientDoc);
-                    if (patientSnap.exists()) {
-                        setloggedinuser([{ id: patientSnap.id, ...patientSnap.data() }]);
+                    let userData;
+                    if (userType === "patient") {
+                        const patientDoc = doc(db, 'Patient', user.uid);
+                        const patientSnap = await getDoc(patientDoc);
+                        userData = patientSnap.data();
+                    } else if (userType === "doctor") {
+                        const doctorDoc = doc(db, 'Medical Professional', user.uid);
+                        const doctorSnap = await getDoc(doctorDoc);
+                        userData = doctorSnap.data();
+                    }
+
+                    if (userData) {
+                        setloggedinuser([{
+                            id: user.uid,
+                            ...userData
+                        }]);
                     } else {
-                        console.log("Patient document not found.");
+                        console.log("User document not found.");
                     }
                 } catch (error) {
-                    console.error("Error fetching patient data:", error);
+                    console.error("Error fetching user data:", error);
                 }
             };
 
-            fetchPatientData();
+            fetchData();
         }
-    }, [user]);
+    }, [user, userType]);
 
     return (
         <div className="relative h-full" ref={dropdownRef}>
@@ -72,16 +86,19 @@ const Profile = () => {
                     <img className="object-cover w-full h-full bg-blend-overlay bg-primary" src={ProfileIcon} alt="profile" />
                 </div>
                 <div />
-                <FaChevronDown className="h-5 w-5 cursor-pointer" style={{ color: 'white' }} onClick={toggleDropdown} />
+                <FaChevronDown
+                    className="h-5 w-5 cursor-pointer"
+                    style={{ color: 'white' }}
+                    onClick={toggleDropdown}
+                />
             </div>
             {isDropdownOpen && (
                 <div className="absolute top-full right-2 mt-1  w-48 bg-primary shadow-lg rounded-lg">
-                    <ul >
-                      
-                        {loggedinuser.map(patient => (
-                            <li key={patient.id} className="py-2 px-4 hover:bg-secondary rounded-lg text-white">
-                                <p>{patient.p_name}</p> {/* Assuming 'p_name' is a field in the patient document */}
-                                <p>{patient.p_number}</p> {/* Assuming 'p_number' is a field in the patient document */}
+                    <ul>
+                        {loggedinuser.map(user => (
+                            <li key={user.id} className="py-2 px-4 hover:bg-secondary rounded-lg text-white">
+                                <p>{user.mp_name || user.p_name}</p>
+                                <p>{user.mp_number || user.p_number}</p>
                             </li>
                         ))}
                         <li className="py-2 px-4 hover:bg-secondary rounded-lg text-white">
