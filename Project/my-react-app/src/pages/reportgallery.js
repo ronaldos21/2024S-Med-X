@@ -37,7 +37,7 @@ const ReportGallery = () => {
     }, [user, navigate]); // Fetch reports whenever user or navigate changes
 
     // Calculate total number of pages
-    const totalPages = Math.ceil(reports.length / 5);
+    const totalPages = Math.ceil(reports.length / 7);
 
     // Slice the reports array based on current page
     const startIndex = (currentPage - 1) * 7;
