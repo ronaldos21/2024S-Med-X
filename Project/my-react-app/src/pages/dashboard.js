@@ -72,7 +72,7 @@ const Dashboard = () => {
     } else if (userType === "doctor") {
         return (
             <div className="h-full flex-col inline-flex gap-10 pl-5 pr-5 pt-5">
-                {/* Render doctor dashboard */}
+                {/* Render doctor dashboard @ronaldos21*/}
                 hi doctor
             </div>
         );

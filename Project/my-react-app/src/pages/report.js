@@ -34,6 +34,7 @@ const Report = () => {
         const nextId = String(numReports).padStart(5, '0');
 
         // Construct the document path and set the data
+        // insert data as per the logged in user if user is mp mp_id: user.uid and if user is patient p_id:user.uid @ronaldos21 
         const reportDocRef = doc(db, 'X-ray', nextId);
         await setDoc(reportDocRef, {
             p_id: "", // Empty string for patient ID
