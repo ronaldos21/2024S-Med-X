@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../components/img/Logo.png';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from '../components/session/AuthContext'; // Import useAuth hook
@@ -11,6 +11,17 @@ const Login = () => {
   const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userType = localStorage.getItem('userType');
+    if (user && userType) {
+      setUser(user);
+      setUserType(userType);
+      navigate('/', { replace: true });
+    }
+  }, []); // Run only once on component mount
+
   const signInAs = (email, password, type) => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
@@ -18,6 +29,8 @@ const Login = () => {
         const user = userCredential.user;
         setUser(user);
         setUserType(type); // Set the user type after successful sign-in
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('userType', type);
         navigate('/', { replace: true });
       })
       .catch((error) => {
