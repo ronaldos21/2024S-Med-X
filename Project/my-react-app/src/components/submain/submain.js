@@ -9,7 +9,6 @@ import Report from "../../pages/report";
 import { Routes, Route } from "react-router-dom";
 import Images from "../../pages/images";
 import ReportGallery from "../../pages/reportgallery";
-import ReportPagepdf from "../../test/print button";
 
 const Submain = () => {
     return (
@@ -23,7 +22,6 @@ const Submain = () => {
                 <Route path="/report" element={<Report />} />
                 <Route path="/reportgall" element={<ReportGallery />} />
                 <Route path="/images" element={<Images />} />
-                <Route path="/pdf" element={<ReportPagepdf />} />
             </Routes>
             <Footer/>
         </div>

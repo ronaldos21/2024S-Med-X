@@ -5,6 +5,7 @@ import { collection, setDoc, doc, getDocs } from 'firebase/firestore';
 import { useAuth } from '../components/session/AuthContext';
 
 import { Timestamp } from "firebase/firestore";
+import PrintableReport from "../test/printpdf";
 
 const Report = () => {
   const { user, userType } = useAuth();
@@ -106,6 +107,19 @@ const Report = () => {
                 <button className="PrintReport text-center text-white text-2xl font-normal font-['Inter']" onClick={addReportToFirestore}>Submit Report</button>
               </div>
             </div>
+            <div className="self-stretch flex-col justify-end items-end flex">
+          <div className="DownloadReport  h-12 px-5 py-2.5 bg-black bg-opacity-20 rounded-lg justify-start items-start gap-2.5 inline-flex">
+          <PrintableReport 
+          result={result}
+          url={url}
+          formattedDate={formattedDate}
+          userType={userType}
+          user={user}
+          handleOKClick={handleOKClick}
+          nextReportId={nextReportId}
+          showPopup={showPopup}
+          />  </div>
+        </div>
           </div>
         </div>
         {/* Popup */}
@@ -152,6 +166,7 @@ const Report = () => {
             <button className="PrintReport text-center text-white text-2xl font-normal font-['Inter']" onClick={addReportToFirestore}>Submit Report</button>
           </div>
         </div>
+       
       </div>
     </div>
     {/* Popup */}
