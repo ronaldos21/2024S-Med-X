@@ -4,7 +4,6 @@ import Main from './components/main/main.js';
 import Login from './pages/Login.js';
 import { AuthProvider } from './components/session/AuthContext.js';
 import { auth } from './firebase.js'; // Import auth from firebase.js
-import ReportPagepdf from './test/print button.js';
 import PrintableReport from './test/printpdf.js';
 
 function App() {
@@ -22,8 +21,6 @@ function App() {
         <AuthProvider>
             <div className="App overflow-y-scroll no-scrollbar">
                 {user ? <Main user={user} /> : <Login/>} 
-           
-                {/* <PrintableReport/> */}
             </div>
         </AuthProvider>
     );
