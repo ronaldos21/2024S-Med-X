@@ -102,13 +102,11 @@ const Report = () => {
             <div className="self-stretch flex-col justify-start items-start flex">
               <div className="text-center text-customPurple text-3xl font-normal font-['Inter']">{result}</div>
             </div>
-            <div className="self-stretch flex-col justify-end items-end flex">
-              <div className="DownloadReport  h-12 px-5 py-2.5 bg-black bg-opacity-20 rounded-lg justify-start items-start gap-2.5 inline-flex">
-                <button className="PrintReport text-center text-white text-2xl font-normal font-['Inter']" onClick={addReportToFirestore}>Submit Report</button>
+            <div className="self-stretch flex-row justify-start items-start flex">
+              <div className="DownloadReport  h-12 px-5 py-2.5 bg-gradient-customgradient rounded-lg justify-start items-start gap-2.5 inline-flex">
+                <button className="PrintReport bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={addReportToFirestore}>Submit Report</button>
               </div>
-            </div>
-            <div className="self-stretch flex-col justify-end items-end flex">
-          <div className="DownloadReport  h-12 px-5 py-2.5 bg-black bg-opacity-20 rounded-lg justify-start items-start gap-2.5 inline-flex">
+          <div className="DownloadReport  h-12 px-5 py-2.5 bg-opacity-20 rounded-lg justify-start items-start gap-2.5 inline-flex">
           <PrintableReport 
           result={result}
           url={url}
