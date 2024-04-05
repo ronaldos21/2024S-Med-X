@@ -21,16 +21,17 @@ const Searchbar = () => {
         const unsubscribe = onSnapshot(collection(db, 'X-ray'), (snapshot) => {
             const xrays = snapshot.docs.map(doc => {
                 const data = doc.data();
-                const { medical_term, p_id, scan_date ,status} = data;
+                const { medical_term, p_id, scan_date, status } = data;
                 const { id } = doc;
                 const scanFormattedDate = scan_date && typeof scan_date.toDate === 'function' ? scan_date.toDate().toLocaleDateString() : '';
-            
-                return { id, medical_term, p_id, scanFormattedDate ,status};
+                const searchStatus = data.status === '0' ? 'Reviewing' : 'Reviewed'; // Fixed the assignment here
+                return { id, medical_term, p_id, scanFormattedDate, status, searchStatus }; // Added searchStatus to return object
             });
             setXrayData(xrays);
         });
         return () => unsubscribe();
     }, []);
+    
 
     useEffect(() => {
         if (searchTerm.trim() === '') {
@@ -41,7 +42,7 @@ const Searchbar = () => {
         const results = xrayData.filter(xray =>
             Object.values(xray).some(value =>
                 value !== undefined && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-            ) || xray.id.toLowerCase().includes(searchTerm.toLowerCase())
+            ) || xray.id.toLowerCase().includes(searchTerm.toLowerCase() || xray.searchStatus)
         );
         setSearchResults(results);
     }, [searchTerm, xrayData]);
