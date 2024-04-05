@@ -61,6 +61,7 @@ const ReportPage = () => {
                     </div>
                     <div className="self-stretch h-full flex-col justify-start items-start gap-5 flex">
                         <div className="text-center text-indigo-300 text-[64px] font-normal font-['Inter']">{report.data.medical_term}<br/></div>
+                        <div className="self-stretch text-justify text-white font-normal font-['Inter'] text-wrap w-1/2">{report.data.medical_description}</div>
                     </div>
                     <div className="self-stretch h-full flex-col justify-center items-end gap-5 flex">
                         <div className="self-stretch justify-start items-center gap-5 inline-flex">
