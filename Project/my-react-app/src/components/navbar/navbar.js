@@ -12,6 +12,7 @@ const Navbar = () => {// Access user from AuthContext
     const [isDashboardActive, setIsDashboardActive] = useState(true);
     const [isMedexerActive, setIsMedexerActive] = useState(false);
     const [isReportActive, setIsReportActive] = useState(false);
+    const [isReportdActive, setIsReportdActive] = useState(false);
     const [isImagesActive, setIsImagesActive] = useState(false);
     const [isAPItestActive, setIsAPItestActive] = useState(false);
 
@@ -83,6 +84,25 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsAPItestActive(false);
                                     }}
                                 >Report</NavLink>
+                            </div>
+                        </div>
+                        <div className="w-fit justify-start items-center gap-3 inline-flex">
+                            <div className="w-[20px] h-[20px] ">
+                                <TbReportMedical className={`${isReportdActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
+
+                            </div>
+                            <div>
+                                <NavLink
+                                    to="/reportdetails"
+                                    className={isReportdActive ? activeClassName : normalLink}                             onClick={() => {
+                                        setIsDashboardActive(false);
+                                        setIsMedexerActive(false);
+                                        setIsReportActive(false);
+                                        setIsReportdActive(true);
+                                        setIsImagesActive(false);
+                                        setIsAPItestActive(false);
+                                    }}
+                                >Report details</NavLink>
                             </div>
                         </div>
                         {/* <div className="w-fit justify-start items-center gap-3 inline-flex">
