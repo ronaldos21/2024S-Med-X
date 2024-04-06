@@ -46,14 +46,14 @@ const ReportPage = () => {
         return (
             <div className="w-full h-full pl-[30px] pr-[15px] pt-[15px] pb-[30px] justify-start items-start gap-5 inline-flex">
                 <div className="self-stretch p-5 flex-col justify-start items-start gap-5 inline-flex">
-                    <div className="Report text-white text-5xl font-normal">Report: #12345
-                    {/* {report.id} */}
+                    <div className="Report text-white text-5xl font-normal">
+                        {/* {report.id} */}
                     </div>
                     <div className="w-[314px] h-[418px] rounded-[20px] flex-col justify-center items-start gap-5 flex">
                         <img className="rounded-[20px] object-cover w-full h-full"
-                        src="https://via.placeholder.com/314x418"
-                        // {report.data.xr_image}
-                        alt="Report_image"
+                            src="https://via.placeholder.com/314x418"
+                            // {report.data.xr_image}
+                            alt="Report_image"
                         />
                     </div>
                 </div>
@@ -94,19 +94,19 @@ const ReportPage = () => {
                     </div>
                 </div>
             </div>
-         );
+        );
     } else if (userType === "doctor") {
         return (
             <div className="w-full h-full pl-[30px] pr-[15px] pt-[15px] pb-[30px] justify-start items-start gap-5 inline-flex">
                 <div className="self-stretch p-5 flex-col justify-start items-start gap-5 inline-flex">
                     <div className="Report text-white text-5xl font-normal">Report: #12345
-                    {/* {report.id} */}
+                        {/* {report.id} */}
                     </div>
                     <div className="w-[314px] h-[418px] rounded-[20px] flex-col justify-center items-start gap-5 flex">
                         <img className="rounded-[20px] object-cover w-full h-full"
-                        src="https://via.placeholder.com/314x418"
-                        // {report.data.xr_image}
-                        alt="Report_image"
+                            src="https://via.placeholder.com/314x418"
+                            // {report.data.xr_image}
+                            alt="Report_image"
                         />
                     </div>
                 </div>
@@ -121,7 +121,7 @@ const ReportPage = () => {
                         <div className="self-stretch h-full flex-col justify-start items-start gap-5 flex">
                             <div className="text-center text-indigo-300 text-5xl font-normal font-['Inter']">Hernia
                                 {/* {report.data.medical_term} */}
-                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="self-stretch h-full flex-col justify-center items-end gap-5 flex">
@@ -136,7 +136,7 @@ const ReportPage = () => {
                             <div className="self-stretch h-full p-2.5 bg-neutral-900 rounded-[20px] flex-col justify-center items-center gap-2.5 flex">
                                 <div className="self-stretch grow shrink basis-0 text-justify text-white text-2xl font-normal font-['Inter']">Hello World
                                     {/* {report.data.mp_comment} */}
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="justify-end items-center gap-5 inline-flex">
@@ -153,7 +153,7 @@ const ReportPage = () => {
         );
     } else {
         return null;
-      }
+    }
 };
 
 export default ReportPage;

@@ -43,6 +43,7 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsDashboardActive(true);
                                         setIsMedexerActive(false);
                                         setIsReportActive(false);
+                                        setIsReportdActive(false);
                                         setIsImagesActive(false);
                                         setIsAPItestActive(false);
                                     }}
@@ -62,6 +63,7 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsDashboardActive(false);
                                         setIsMedexerActive(true);
                                         setIsReportActive(false);
+                                        setIsReportdActive(false);
                                         setIsImagesActive(false);
                                         setIsAPItestActive(false);
                                     }}
@@ -76,17 +78,18 @@ const Navbar = () => {// Access user from AuthContext
                             <div>
                                 <NavLink
                                     to="/reportgall"
-                                    className={isReportActive ? activeClassName : normalLink}                             onClick={() => {
+                                    className={isReportActive ? activeClassName : normalLink} onClick={() => {
                                         setIsDashboardActive(false);
                                         setIsMedexerActive(false);
                                         setIsReportActive(true);
+                                        setIsReportdActive(false);
                                         setIsImagesActive(false);
                                         setIsAPItestActive(false);
                                     }}
                                 >Report</NavLink>
                             </div>
                         </div>
-                        <div className="w-fit justify-start items-center gap-3 inline-flex">
+                        <div className="w-fit justify-start items-center gap-2 inline-flex">
                             <div className="w-[20px] h-[20px] ">
                                 <TbReportMedical className={`${isReportdActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
 
@@ -94,7 +97,7 @@ const Navbar = () => {// Access user from AuthContext
                             <div>
                                 <NavLink
                                     to="/reportdetails"
-                                    className={isReportdActive ? activeClassName : normalLink}                             onClick={() => {
+                                    className={isReportdActive ? activeClassName : normalLink} onClick={() => {
                                         setIsDashboardActive(false);
                                         setIsMedexerActive(false);
                                         setIsReportActive(false);
@@ -102,7 +105,7 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsImagesActive(false);
                                         setIsAPItestActive(false);
                                     }}
-                                >Report details</NavLink>
+                                >Report Details</NavLink>
                             </div>
                         </div>
                         {/* <div className="w-fit justify-start items-center gap-3 inline-flex">
