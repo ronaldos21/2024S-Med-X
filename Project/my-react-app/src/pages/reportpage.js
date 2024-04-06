@@ -134,7 +134,7 @@ const ReportPage = () => {
                         <div className="self-stretch h-full flex-col justify-center items-start gap-5 flex">
                             <div className="text-center text-white text-3xl font-normal font-['Inter']">Your Comment:</div>
                             <div className="self-stretch h-full p-2.5 bg-neutral-900 rounded-[20px] flex-col justify-center items-center gap-2.5 flex">
-                                <div className="self-stretch grow shrink basis-0 text-justify text-white text-2xl font-normal font-['Inter']">Horefm ipsum dolor sit amet, consectetur
+                                <div className="self-stretch grow shrink basis-0 text-justify text-white text-2xl font-normal font-['Inter']">Hello World
                                     {/* {report.data.mp_comment} */}
                                     </div>
                             </div>
