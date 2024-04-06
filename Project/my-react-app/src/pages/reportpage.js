@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebase'; // Import your Firebase configuration
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useAuth } from '../components/session/AuthContext';
+import { useParams } from 'react-router-dom';
 
 import StatusButton from '../components/button/StatusButton';
 import PrintableReport from "../test/printpdf";
@@ -9,6 +10,8 @@ import PrintableReport from "../test/printpdf";
 const ReportPage = () => {
     const [report, setReport] = useState([]);
     const { user, userType } = useAuth();
+    const { reportId } = useParams();
+    console.log(reportId);
     //const navigate = useNavigate();  //Navigate to home if user is not logged in
 
     //Fetch report selected from report gallery or search bar

@@ -59,9 +59,10 @@ const ReportGallery = () => {
         setCurrentPage(prevPage => prevPage - 1);
     };
 
-    const handleImageClick = ({report}) => {
+    const handleImageClick = ({reportId}) => {
         // Handle click event, for example, navigate to a detail page
-        navigate('/reportdetails');
+        //const reportId = report;
+        navigate(`/reportdetails/${reportId}`);
     };
 
     return (
