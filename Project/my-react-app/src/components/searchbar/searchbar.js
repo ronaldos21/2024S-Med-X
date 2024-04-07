@@ -1,43 +1,76 @@
 'use client'
 
-import React, { useRef, useState } from 'react';
-// import SearchIcon from '../img/icons/search.png';
+import React, { useRef, useState, useEffect } from 'react';
 import { FaSearch } from "react-icons/fa";
-import { numbers } from "../../Data/data.js";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import StatusButton from '../button/StatusButton';
+import { db } from '../../firebase'; 
+
 
 const Searchbar = () => {
     const searchInputRef = useRef(null);
     const [showSearchOptions, setShowSearchOptions] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [xrayData, setXrayData] = useState([]);
 
-    const [activeSearch, setActiveSearch] = useState([])
+    useEffect(() => {
+        const unsubscribe = onSnapshot(collection(db, 'X-ray'), (snapshot) => {
+            const xrays = snapshot.docs.map(doc => {
+                const data = doc.data();
+                const { medical_term, p_id, scan_date, status } = data;
+                const { id } = doc;
+                const scanFormattedDate = scan_date && typeof scan_date.toDate === 'function' ? scan_date.toDate().toLocaleDateString() : '';
+                const searchStatus = data.status === '0' ? 'Reviewing' : 'Reviewed'; // Fixed the assignment here
+                return { id, medical_term, p_id, scanFormattedDate, status, searchStatus }; // Added searchStatus to return object
+            });
+            setXrayData(xrays);
+        });
+        return () => unsubscribe();
+    }, []);
+    
 
-    const handleSearch = (e) => {
-        if (e.target.value === '') {
-            setActiveSearch([])
-            return false;
+    useEffect(() => {
+        if (searchTerm.trim() === '') {
+            setSearchResults([]);
+            return;
         }
 
-        setActiveSearch(numbers.filter(n => n.toString().includes(e.target.value)).slice(0, 8))
-    }
+        const results = xrayData.filter(xray =>
+            Object.values(xray).some(value =>
+                value !== undefined && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+            ) || xray.id.toLowerCase().includes(searchTerm.toLowerCase() || xray.searchStatus)
+        );
+        setSearchResults(results);
+    }, [searchTerm, xrayData]);
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+    };
 
     const handleSearchIconClick = (event) => {
         event.preventDefault();
-        // Focus on the search input field when the search icon is clicked
         if (searchInputRef.current) {
             searchInputRef.current.focus();
         }
-        // Toggle the search options
         setShowSearchOptions(!showSearchOptions);
     };
 
     return (
-        <form className="flex flex-col justify-start items-start gap-2.5 flex-grow flex-shrink flex-basis-0 self-stretch">
+        <form className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex z-40">
+            {/* X-ray data section */}
+           
+
+            {/* Search bar */}
             <div className="inline-flex justify-between items-center p-5 bg-primary rounded-[30px] h-full w-full">
                 <input
                     ref={searchInputRef}
                     type="text"
-                    placeholder="Search"
-                    className="text-customBasewhite w-full text-base font-normal font-['Inter'] bg-transparent border-none outline-none placeholder:text-customBasewhite-30 focus:placeholder:invisible" onChange={(e) => handleSearch(e)}
+                    placeholder="Search your report id, medical term, date or status"
+                    className="text-customBasewhite w-full text-base font-normal font-['Inter'] bg-transparent border-none outline-none placeholder:text-customBasewhite-30 focus:placeholder:invisible"
+                    onChange={(e) => handleSearch(e)}
                 />
                 <button className="relative  rounded-full" onClick={handleSearchIconClick}>
                     <div className='w-25 h-25 text-customBasewhite-30 hover:text-white'>
@@ -45,24 +78,34 @@ const Searchbar = () => {
                     </div>
                 </button>
             </div>
-
-
-            {
-                activeSearch.length > 0 && (
-                    //inline-flex justify-between items-center p-5 bg-slate-700 rounded-[30px] h-auto w-full text-white flex-col
-                    <div className="inline-flex justify-between items-center p-5 bg-slate-700 rounded-[30px] h-[300px] w-[300px] text-white flex-col" >
-                        {
-                            activeSearch.map(s => (
-                                <span className="text-sm">{s}</span>
-
-                            ))
-                        }
+            <div className='mt-3 bg-neutral-900 rounded-[20px] w-full'>
+            {searchTerm && searchResults.length > 0 && (
+                <div className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex">
+                    {searchResults.map((xray, index) => (
+                        <div key={index} className="self-stretch p-5 bg-neutral-900 rounded-[20px] justify-between items-center inline-flex">
+                            <div className="h-[19px] justify-center items-center gap-5 flex">
+                                <div className="text-white text-base font-normal font-['Inter']">{xray.id}</div>
+                                <div className="text-indigo-300 text-base font-normal font-['Inter']">{xray.medical_term}</div>
+                            </div>
+                            <div className="justify-end items-center gap-5 flex">
+                            
+      <StatusButton status={xray.status} />
+                                <div className="text-emerald-200 text-base font-normal font-['Inter'] ">{xray.scanFormattedDate}</div>
+                               
+                            </div>
                         </div>
-                )
-            }
-
+                    ))}
+                </div>
+            )}
+            </div>
         </form>
     );
 };
 
 export default Searchbar;
+
+
+
+
+
+
