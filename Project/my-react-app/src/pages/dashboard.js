@@ -6,7 +6,6 @@ import StatusButton from '../components/button/StatusButton';
 
 const Dashboard = () => {
     const { userType, user } = useAuth();
-
     const [lastScan, setLastScan] = useState(null);
     const [loading, setLoading] = useState(true); // Loading state  
 
