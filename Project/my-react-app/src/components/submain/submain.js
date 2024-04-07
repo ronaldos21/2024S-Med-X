@@ -23,7 +23,7 @@ const Submain = () => {
                 <Route path="/report" element={<Report />} />
                 <Route path="/reportgall" element={<ReportGallery />} />
                 <Route path="/images" element={<Images />} />
-                <Route path="/reportdetails" element={<ReportPage />} />
+                <Route path="/reportdetails/:reportId" element={<ReportPage />} />
             </Routes>
             <Footer/>
         </div>
