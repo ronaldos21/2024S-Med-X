@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; //useLocation
 import { db } from '../firebase'; // Import your Firebase configuration
 import { collection, query, where, getDocs } from 'firebase/firestore';
-//import StatusButton from '../components/button/StatusButton';
+import StatusButton from '../components/button/StatusButton';
 import { useAuth } from '../components/session/AuthContext';
 
 const ReportGallery = () => {
@@ -86,6 +86,9 @@ const ReportGallery = () => {
                                 alt="Report_image"
                             />
                         </div>
+                        <div className="self-stretch justify-start items-center gap-5 inline-flex">
+                            <StatusButton status={report.data.status} />
+                        </div>
                         <div className="Frame33 justify-start items-center  inline-flex flex-col gap-1">
                             <div className="Details text-white text-base font-normal">#{report.id}</div>
                             <div className="Details text-customPurple text-base font-normal">
@@ -93,6 +96,7 @@ const ReportGallery = () => {
                             </div>
                         </div>
                     </div>
+                    
                 ))}
             </div>
             {/* Pagination controls */}

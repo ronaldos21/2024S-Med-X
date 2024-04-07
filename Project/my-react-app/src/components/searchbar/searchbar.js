@@ -8,8 +8,6 @@ import StatusButton from '../button/StatusButton';
 import { db } from '../../firebase'; 
 
 
-
-
 const Searchbar = () => {
     const searchInputRef = useRef(null);
     const [showSearchOptions, setShowSearchOptions] = useState(false);
