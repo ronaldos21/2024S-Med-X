@@ -89,25 +89,6 @@ const Navbar = () => {// Access user from AuthContext
                                 >Report</NavLink>
                             </div>
                         </div>
-                        <div className="w-fit justify-start items-center gap-2 inline-flex">
-                            <div className="w-[20px] h-[20px] ">
-                                <TbReportMedical className={`${isReportdActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
-
-                            </div>
-                            <div>
-                                <NavLink
-                                    to="/reportdetails"
-                                    className={isReportdActive ? activeClassName : normalLink} onClick={() => {
-                                        setIsDashboardActive(false);
-                                        setIsMedexerActive(false);
-                                        setIsReportActive(false);
-                                        setIsReportdActive(true);
-                                        setIsImagesActive(false);
-                                        setIsAPItestActive(false);
-                                    }}
-                                >Report Details</NavLink>
-                            </div>
-                        </div>
                         {/* <div className="w-fit justify-start items-center gap-3 inline-flex">
                             <div className="w-[20px] h-[20px] relative">
                                 <TbReportMedical className={`${isReportActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
