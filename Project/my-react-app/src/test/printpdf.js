@@ -3,19 +3,21 @@ import React from 'react';
 import Logo from '../components/img/Logo.png';
 class PrintableReport extends React.Component {
   render() {
-    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick } = this.props;
+    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname } = this.props;
 
     return (
-      <div className="flex justify-center">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={this.handlePrint}>
-          Print Report
-        </button>
-      </div>
+           <div className='group'>
+           <button className="group-hover:bg-slate-700 px-5 py-2.5 text-primary bg-white bg-opacity-80 rounded-[5px] justify-start items-start gap-2.5 inline-flex active:bg-green-700 focus:ring focus:ring-gray-700" onClick={this.handlePrint} >
+               <div className='group-hover:text-white'>Print Report</div>
+           </button>
+       </div>
     );
   }
 
   handlePrint = () => {
-    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick } = this.props;
+    
+    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname } = this.props;
+    let statusText = status === "1" ? "Reviewed" : "Reviewing";
     const pdfContent = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -60,7 +62,7 @@ class PrintableReport extends React.Component {
             </div>
             <div class="Frame1" style="padding: 10px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex;">
                 <div class="Id00000" style=" font-size: 16px; word-wrap: break-word;">ID: ${nextReportId}</div>
-                <div class="NamePatientName" style="font-size: 16px; word-wrap: break-word;">Name : Patient Name </div>
+                <div class="NamePatientName" style="font-size: 16px; word-wrap: break-word;">Name : ${pname} </div>
             </div>
         </div>
         <div class="ResultHeader" style="align-self: stretch; padding: 20px; justify-content: space-between; align-items: center; display: inline-flex;">
@@ -79,8 +81,8 @@ class PrintableReport extends React.Component {
             </div>
         </div>
         <div class="ReviewHeading" style="align-self: stretch; padding: 20px; justify-content: space-between; align-items: center; display: inline-flex;">
-            <div class="Results" style="text-align: center; font-size: 32px; word-wrap: break-word;">Status: Reviewed</div>
-            <div class="Results" style="text-align: center; font-size: 16px; word-wrap: break-word;">${formattedDate.toDate().toLocaleString()}</div>
+            <div class="Results" style="text-align: center; font-size: 32px; word-wrap: break-word;">Status:${statusText}</div>
+            <div class="Results" style="text-align: center; font-size: 16px; word-wrap: break-word;"></div>
         </div>
         <div class="HospitalDetails" style="align-self: stretch; padding: 20px; justify-content: space-between; align-items: flex-start; display: inline-flex;">
             <div class="HospitalName" style="width: 111px; align-self: stretch; text-align: center; font-size: 16px; word-wrap: break-word;">Hospital Name</div>
@@ -90,8 +92,8 @@ class PrintableReport extends React.Component {
             </div>
         </div>
         <div class="DoctorsComment" style="align-self: stretch; height: 145px; padding: 20px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex;">
-            <div class="DoctorsName" style="align-self: stretch; font-size: 16px; word-wrap: break-word;">Doctors Name</div>
-            <div class="HoremIpsumDolorSitAmetConsecteturAdipiscingElitEtiamEuTurpisMolestieDictumEstAMattisTellusSedDignissimMetusNecFringillaAccumsanRisusSemSollicitudinLacusUtInterdumTellusElitSedRisusMaecenasEgetCondimentumVelit" style="align-self: stretch; text-align: justify; font-size: 16px; word-wrap: break-word;">Horem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit</div>
+            <div class="DoctorsName" style="align-self: stretch; font-size: 16px; word-wrap: break-word;">Doctors Comment:</div>
+            <div class="comment" style="align-self: stretch; text-align: justify; font-size: 16px; word-wrap: break-word;">${comment}</div>
         </div>
         <div class="Footer" style="align-self: stretch; padding: 10px; justify-content: space-between; align-items: center; display: inline-flex;">
             <div class="CopyrightMedxai" style="text-align: justify; font-size: 12px; word-wrap: break-word;">Copyright @ medxai</div>
