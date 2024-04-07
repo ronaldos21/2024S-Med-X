@@ -12,6 +12,7 @@ const Navbar = () => {// Access user from AuthContext
     const [isDashboardActive, setIsDashboardActive] = useState(true);
     const [isMedexerActive, setIsMedexerActive] = useState(false);
     const [isReportActive, setIsReportActive] = useState(false);
+    const [isReportdActive, setIsReportdActive] = useState(false);
     const [isImagesActive, setIsImagesActive] = useState(false);
     const [isAPItestActive, setIsAPItestActive] = useState(false);
 
@@ -42,6 +43,7 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsDashboardActive(true);
                                         setIsMedexerActive(false);
                                         setIsReportActive(false);
+                                        setIsReportdActive(false);
                                         setIsImagesActive(false);
                                         setIsAPItestActive(false);
                                     }}
@@ -61,6 +63,7 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsDashboardActive(false);
                                         setIsMedexerActive(true);
                                         setIsReportActive(false);
+                                        setIsReportdActive(false);
                                         setIsImagesActive(false);
                                         setIsAPItestActive(false);
                                     }}
@@ -75,10 +78,11 @@ const Navbar = () => {// Access user from AuthContext
                             <div>
                                 <NavLink
                                     to="/reportgall"
-                                    className={isReportActive ? activeClassName : normalLink}                             onClick={() => {
+                                    className={isReportActive ? activeClassName : normalLink} onClick={() => {
                                         setIsDashboardActive(false);
                                         setIsMedexerActive(false);
                                         setIsReportActive(true);
+                                        setIsReportdActive(false);
                                         setIsImagesActive(false);
                                         setIsAPItestActive(false);
                                     }}

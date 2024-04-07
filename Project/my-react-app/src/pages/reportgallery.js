@@ -59,6 +59,14 @@ const ReportGallery = () => {
         setCurrentPage(prevPage => prevPage - 1);
     };
 
+    const handleImageClick = (report) => {
+        // Handle click event, for example, navigate to a detail page
+        //const reportId = report;
+        //navigate(`/reportdetails/${report.id}/${report.data.medical_term}`);
+        
+        navigate(`/reportdetails/${report}`);
+    };
+
     return (
         <div className="Frame31 w-full h-full p-7 flex-col justify-start items-start gap-2.5 inline-flex">
             <div className="Report text-white text-5xl font-normal">Reports</div>
@@ -67,6 +75,9 @@ const ReportGallery = () => {
                     <div
                         key={report.id}
                         className="Frame34 flex-col justify-start items-center inline-flex gap-5 bg-primary p-5 rounded-[10px]"
+                        onClick={() => handleImageClick(report.id)}
+                        //onClick={() => navigate(`/reportdetails/${report.id}`)}
+                        style={{ cursor: 'pointer' }}
                     >
                         <div className="Frame32 w-32 h-48 flex-col justify-start items-center flex ">
                             <img
