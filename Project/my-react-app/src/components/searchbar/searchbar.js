@@ -90,7 +90,7 @@ setSearchResults([]);
             {searchTerm && searchResults.length > 0 && (
                 <div className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex" >
                     {searchResults.map((xray, index) => (
-                        <div key={index} className="self-stretch p-5 bg-neutral-900 rounded-[20px] justify-between items-center inline-flex" onClick={() => handleNavigate(xray.id)}>
+                        <div key={index} className="self-stretch p-5 bg-neutral-900 rounded-[20px] justify-between items-center inline-flex hover:bg-slate-700" onClick={() => handleNavigate(xray.id)}>
                             <div className="h-[19px] justify-center items-center gap-5 flex">
                                 <div className="text-white text-base font-normal font-['Inter']">{xray.id}</div>
                                 <div className="text-indigo-300 text-base font-normal font-['Inter']">{xray.medical_term}</div>
