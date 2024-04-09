@@ -108,9 +108,6 @@ const Medexer = () => {
             console.error('Error occurred while fetching data:', error);
         }
     };
-    
-    
-
 
 
     return (
@@ -154,7 +151,7 @@ const Medexer = () => {
                         </div>
                     </div>
                 </div>
-) : (
+            ) : (
                 <div id="DragNDrop" className={`text-green p-3 h-full w-full flex-col justify-start items-start gap2.5 inline-flex ${isDraggingOver ? 'border-4 border-blue-500' : ''}`} onDragOver={handleDragOver} onDrop={handleDrop} onDragLeave={handleDragLeave}>
                     <div className="self-stretch grow shrink basis-0 p-2.5 rounded-[10px] border-dotted border-2 border-zinc-300 border-opacity-30 flex-col justify-center items-center gap-5 flex">
                         <img className="" src={Uploadimg} alt='' />
