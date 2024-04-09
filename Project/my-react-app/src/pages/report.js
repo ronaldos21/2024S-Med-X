@@ -12,6 +12,7 @@ const Report = () => {
   const location = useLocation();
   const result = location.state.result;
   const url = location.state.img;
+  const desc =location.state.description;
   const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
   const [nextReportId, setNextReportId] = useState(null); // State to store the next report ID
   const navigate = useNavigate(); // Get the navigate function
@@ -43,7 +44,7 @@ const Report = () => {
           status: "0",
           mp_comment: "",
           mp_review_date: "",
-          medical_description: "",
+          medical_description: desc,
       };
 
       // Check userType to decide whether to associate the report with mp_id or p_id
@@ -101,6 +102,9 @@ const Report = () => {
             </div>
             <div className="self-stretch flex-col justify-start items-start flex">
               <div className="text-center text-customPurple text-3xl font-normal font-['Inter']">{result}</div>
+            </div>
+            <div className="self-stretch flex-col justify-start items-start flex">
+              <div className="text-center text-customWhite font-normal font-['Inter']">{desc}</div>
             </div>
             <div className="self-stretch flex-row justify-start items-start flex">
               <div className="DownloadReport  h-12 px-5 py-2.5 bg-gradient-customgradient rounded-lg justify-start items-start gap-2.5 inline-flex">
