@@ -15,7 +15,7 @@ Below are instructions on how to set up the front-end Docker image and run the D
 2. Run the below command to create the container.
 
     ```
-    docker run -p 3000:300 med-x:dev
+    docker run -p 3000:3000 med-x:dev
     ```
 ***
 
