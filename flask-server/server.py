@@ -63,9 +63,13 @@ def predict():
         result = get_finding(model, filename)
 
         # Return prediction result
-        return jsonify({'prediction': result['top_diagnosis'],
-                        'predictions': result['predictions']
-                        }), 200
+        return jsonify({
+            'prediction': {
+                'name': result['top_diagnosis'],
+                'description': result['predictions'][result['top_diagnosis']]['description']
+            },
+            'predictions': result['predictions']
+            }), 200
 
     except Exception as e:
         print("An error occurred:", str(e))
