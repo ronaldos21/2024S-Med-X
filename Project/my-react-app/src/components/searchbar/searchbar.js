@@ -7,6 +7,7 @@ import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import StatusButton from '../button/StatusButton';
 import { db } from '../../firebase'; 
 
+import { useNavigate } from 'react-router-dom'; //useLocation
 
 const Searchbar = () => {
     const searchInputRef = useRef(null);
@@ -15,6 +16,7 @@ const Searchbar = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [xrayData, setXrayData] = useState([]);
 
+    const navigate = useNavigate();
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, 'X-ray'), (snapshot) => {
             const xrays = snapshot.docs.map(doc => {
@@ -48,6 +50,7 @@ const Searchbar = () => {
     const handleSearch = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
+
     };
 
     const handleSearchIconClick = (event) => {
@@ -58,6 +61,11 @@ const Searchbar = () => {
         setShowSearchOptions(!showSearchOptions);
     };
 
+    const handleNavigate=(reportId)=>{
+        console.log(reportId)
+navigate(`/reportdetails/${reportId}`)
+setSearchResults([]);
+    }
     return (
         <form className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex z-40">
             {/* X-ray data section */}
@@ -80,9 +88,9 @@ const Searchbar = () => {
             </div>
             <div className='mt-3 bg-neutral-900 rounded-[20px] w-full'>
             {searchTerm && searchResults.length > 0 && (
-                <div className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex">
+                <div className="h-full w-full bg-neutral-900 rounded-[20px] flex-col justify-start items-start inline-flex" >
                     {searchResults.map((xray, index) => (
-                        <div key={index} className="self-stretch p-5 bg-neutral-900 rounded-[20px] justify-between items-center inline-flex">
+                        <div key={index} className="self-stretch p-5 bg-neutral-900 rounded-[20px] justify-between items-center inline-flex hover:bg-slate-700" onClick={() => handleNavigate(xray.id)}>
                             <div className="h-[19px] justify-center items-center gap-5 flex">
                                 <div className="text-white text-base font-normal font-['Inter']">{xray.id}</div>
                                 <div className="text-indigo-300 text-base font-normal font-['Inter']">{xray.medical_term}</div>

@@ -86,7 +86,7 @@ const ReportGallery = () => {
                                 alt="Report_image"
                             />
                         </div>
-                        <div className="self-stretch justify-start items-center gap-5 inline-flex">
+                        <div className="self-stretch justify-center items-center gap-5 inline-flex">
                             <StatusButton status={report.data.status} />
                         </div>
                         <div className="Frame33 justify-start items-center  inline-flex flex-col gap-1">

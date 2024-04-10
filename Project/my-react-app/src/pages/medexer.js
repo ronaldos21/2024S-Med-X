@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Uploadimg from "../components/img/upload.png";
-import {storage} from "../firebase.js";
+import { storage } from "../firebase.js";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ const Medexer = () => {
     const [uploadedImage, setUploadedImage] = useState(null)
 
     const [finding, setFinding] = useState('');
+    const [description, setDescription] = useState(''); // State for description
     const [isLoading, setIsLoading] = useState(false); //state for loading status
 
     const history = useNavigate()
@@ -57,7 +58,8 @@ const Medexer = () => {
     };
 
     const deletePreviewFile = () => {
-        setFinding('')
+        setFinding('');
+        setDescription(''); // Reset description
         setFileData({ ...fileData, previewFile: null, errorMessage: '' });
     };
 
@@ -84,25 +86,29 @@ const Medexer = () => {
             console.error("Error uploading image:", error);
         });
     };
-    
+
     const handlePredict = async (imageURL) => {
         try {
             const response = await fetch(`http://localhost:5001/predict?image_url=${encodeURIComponent(imageURL)}`);
-    
+
             if (!response.ok) {
                 throw new Error('Failed to fetch');
             }
-    
+
             const data = await response.json();
-    
-            setFinding(data.prediction);
-            history("/report", { state: { result: data.prediction, img: imageURL } });
+
+            console.log('Prediction:', data.prediction.name);
+            console.log('Description:', data.prediction.description);
+
+            setFinding(data.prediction.name);
+            setDescription(data.prediction.description); // Set description in state
+            history("/report", { state: { result: data.prediction.name, img: imageURL, description: data.prediction.description } });
         } catch (error) {
             setIsLoading(false); // Set loading to false in case of error
             console.error('Error occurred while fetching data:', error);
         }
     };
-    
+
 
     return (
         <div className='w-full h-full flex flex-col justify-center items-center'>
