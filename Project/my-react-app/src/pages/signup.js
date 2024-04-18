@@ -26,15 +26,7 @@ const SignUp = () => {
 
 
 
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const userType = localStorage.getItem('userType');
-        if (user && userType) {
-            setUser(user);
-            setUserType(userType);
-            navigate('/', { replace: true });
-        }
-    }, [navigate, setUser, setUserType]);
+   
 
 
     const handlingSignUp = async (e) => {
