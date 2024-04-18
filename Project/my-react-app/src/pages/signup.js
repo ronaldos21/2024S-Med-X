@@ -13,15 +13,18 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+    const [emailError, setEmailError] = useState(null); //Separate state for email errors
+    const [passwordError, setPasswordError] = useState(null); //Separate state for password errors
     const [showPassword, setShowPassword] = useState(false); // State to control password visibility
     const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
+
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const navigate = useNavigate();
+
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -31,9 +34,7 @@ const SignUp = () => {
             setUserType(userType);
             navigate('/', { replace: true });
         }
-    }, []);
-
-
+    }, [navigate, setUser, setUserType]);
 
 
     const handlingSignUp = async (e) => {
@@ -41,19 +42,19 @@ const SignUp = () => {
 
         // Test Case: Empty Email and Password Fields
         if (email.trim() === '' || password.trim() === '') {
-            setError("Email and password are required fields.");
+            setEmailError("Email and password are required fields.");
             return;
         }
 
         // Test Case: Mismatched Email and Confirm Email
         if (email !== confirmEmail) {
-            setError("Emails don't match");
+            setEmailError("Emails don't match");
             return;
         }
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{6,})/;
         if (!passwordRegex.test(password)) {
-            setError("Password must contain at least one uppercase letter, one special character, and be at least 6 characters long.");
+            setPasswordError("Password must contain at least one uppercase letter, one special character, and be at least 6 characters long.");
             return;
         }
 
@@ -81,14 +82,12 @@ const SignUp = () => {
             const form = e.target;
             form.submit();
         } catch (error) {
-            setError(error.message);
+            if (error.code === 'auth/email-already-in-use') {
+                setEmailError("This email address is already in use.");
+            } else {
+                setPasswordError(error.message);
+            }
         }
-
-        {/*}
-        } catch (error) {
-            setError(error.message);
-        }
-    */}
 
     };
 
@@ -111,39 +110,29 @@ const SignUp = () => {
                     <input className="w-[355px] h-[50px] bg-zinc-300 rounded-[20px] mb-2.5" type="email" id="grid-first-email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}
                         required
                     />
+                    {/* Display error message under the email input */}
+                    {emailError && <p className="text-red-500 text-xs italic">{emailError}</p>}
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-3" htmlFor="grid-first-email">
                         Email
                     </label>
-
-                    {/*
-                    {error && <p className="text-red-500 text-xs italic">{error}</p>} */}
-
-
                 </div>
                 <div className="input-container">
                     <input className="w-[355px] h-[50px] bg-zinc-300 rounded-[20px] mb-2.5" type="email" id="grid-confirm-email" placeholder="Confirm Email" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)}
                         required
                     />
+                    {emailError && <p className="text-red-500 text-xs italic">{emailError}</p>}
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-3" htmlFor="grid-confirm-email">
                         Confirm Email
                     </label>
 
                 </div>
-                <div className="input-container">
-                    <input className="w-[355px] h-[50px] bg-zinc-300 rounded-[20px] mb-2.5" type={showPassword ? 'text' : 'password'} id="grid-password" placeholder="Enter a password" value={password} onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    {/* Display error message under the password input */}
-                    {error && <p className="text-red-500 text-xs italic">{error}</p>}
 
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-3" htmlFor="grid-password">
-                        Enter a password
-                    </label>
-                    <button
-                        type="button"
-                        className="flex flex-wrap -mx-3 mb-6"
-                        onClick={togglePasswordVisibility}
-                    >
+                <div className="input-container relative">
+                    <input className="w-[355px] h-[50px] bg-zinc-300 rounded-[20px] mb-2.5 pr-12" type={showPassword ? 'text' : 'password'} id="grid-password" placeholder="Enter a password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    {/* Display error message under the password input */}
+                    {passwordError && <p className="text-red-500 text-xs italic">{passwordError}</p>}
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-3" htmlFor="grid-password">Enter a password</label>
+                    <button type="button" className="absolute top-1/4 transform -translate-y-1/4 right-1 text-blue-500 w-8 h-8" onClick={togglePasswordVisibility}>
                         {showPassword ? (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -154,9 +143,11 @@ const SignUp = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7a2 2 0 00-2 2m0 8a2 2 0 002 2m8-10a2 2 0 012-2m0 8a2 2 0 01-2 2m-4-4a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                         )}
-                    </button>
 
+                    </button>
                 </div>
+
+
                 <div className="w-[156px] h-[38px] bg-zinc-300 rounded-[20px] relative">
                     <button className="w-full h-full absolute inset-0 group-hover:bg-slate-800 active:bg-green-700 focus:ring focus:ring-gray-700" type="submit">Sign Up</button>
                 </div>
