@@ -9,6 +9,7 @@ import ReportPage from './pages/reportpage.js';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PatientLogin from './pages/PatientLogin.js';
+import PatientSignUp from './pages/psignup.js';
 function App() {
     const [user, setUser] = useState(null);
 
@@ -32,7 +33,7 @@ function App() {
                             : <Landing/>
                     }/>
                     <Route path='/patientlogin' element={<PatientLogin/>}/>   
-                    <Route path='/patientsignup' element={<PatientLogin/>}/>   
+                    <Route path='/patientsignup' element={<PatientSignUp/>}/>   
                     <Route path='/doctorlogin' element={<PatientLogin/>}/>
                     <Route path='/doctorsignup' element={<PatientLogin/>}/>
                     </Routes>
