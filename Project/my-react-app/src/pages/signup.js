@@ -1,4 +1,4 @@
-import React, { useState,useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../components/img/Logo.png';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -7,6 +7,8 @@ import Patient from '../components/img/patient il.png'
 import { db } from '../firebase'; // Import your Firebase configuration
 import { setDoc, doc } from 'firebase/firestore';
 import { useAuth } from '../components/session/AuthContext';
+
+
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
@@ -14,7 +16,7 @@ const SignUp = () => {
     const [error, setError] = useState(null);
     const [showPassword, setShowPassword] = useState(false); // State to control password visibility
     const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
-    
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -25,28 +27,47 @@ const SignUp = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         const userType = localStorage.getItem('userType');
         if (user && userType) {
-          setUser(user);
-          setUserType(userType);
-          navigate('/', { replace: true });
+            setUser(user);
+            setUserType(userType);
+            navigate('/', { replace: true });
         }
-      }, []); 
-      
+    }, []);
+
+
+
+
     const handlingSignUp = async (e) => {
         e.preventDefault();
+
+        // Test Case: Empty Email and Password Fields
+        if (email.trim() === '' || password.trim() === '') {
+            setError("Email and password are required fields.");
+            return;
+        }
+
+        // Test Case: Mismatched Email and Confirm Email
         if (email !== confirmEmail) {
             setError("Emails don't match");
             return;
         }
+
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{6,})/;
+        if (!passwordRegex.test(password)) {
+            setError("Password must contain at least one uppercase letter, one special character, and be at least 6 characters long.");
+            return;
+        }
+
+
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             const type = "patient"
             console.log('User signed up:', user.uid)
             let patientData = {
-               p_email:email,
-               p_password:password,
-               p_name:email,
-               user_type:"0"
+                p_email: email,
+                p_password: password,
+                p_name: email,
+                user_type: "0"
             };
             const reportDocRef = doc(db, 'Patient', user.uid);
             await setDoc(reportDocRef, patientData);
@@ -55,9 +76,20 @@ const SignUp = () => {
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('userType', type);
             navigate('/', { replace: true });
+
+            // Step 2: Submit the Form
+            const form = e.target;
+            form.submit();
         } catch (error) {
             setError(error.message);
         }
+
+        {/*}
+        } catch (error) {
+            setError(error.message);
+        }
+    */}
+
     };
 
     return (
@@ -68,11 +100,12 @@ const SignUp = () => {
             <div className="w-1/2 h-full flex-col justify-center items-center gap-5  bg-primary">
                 <div className="Patient grow shrink basis-0 self-stretch p-2.5 flex-col justify-center items-center gap-5 inline-flex">
                     <img className="Image1 w-48 h-72 mr-20" src={Patient} alt="Patient" />
-                    <div className="Patient text-white text-4xl font-normal font-['Inter']">Patient</div>
+
                 </div>
                 {/* Left half */}
             </div>
             <form className="w-1/2 h-full flex flex-col justify-center items-center gap-2.5 bg-primary" onSubmit={handlingSignUp}>
+                <div className="Patient text-white text-4xl font-normal font-['Inter']">Sign Up Here!</div>
                 <div className="input-container">
 
                     <input className="w-[355px] h-[50px] bg-zinc-300 rounded-[20px] mb-2.5" type="email" id="grid-first-email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}
@@ -81,7 +114,10 @@ const SignUp = () => {
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-3" htmlFor="grid-first-email">
                         Email
                     </label>
-                    {error && <p className="text-red-500 text-xs italic">{error}</p>}
+
+                    {/*
+                    {error && <p className="text-red-500 text-xs italic">{error}</p>} */}
+
 
                 </div>
                 <div className="input-container">
@@ -97,6 +133,9 @@ const SignUp = () => {
                     <input className="w-[355px] h-[50px] bg-zinc-300 rounded-[20px] mb-2.5" type={showPassword ? 'text' : 'password'} id="grid-password" placeholder="Enter a password" value={password} onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+                    {/* Display error message under the password input */}
+                    {error && <p className="text-red-500 text-xs italic">{error}</p>}
+
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-3" htmlFor="grid-password">
                         Enter a password
                     </label>
@@ -123,7 +162,7 @@ const SignUp = () => {
                 </div>
 
             </form>
-            {error && <p className="text-red-500 text-xs italic">{error}</p>}
+
 
         </div>
 
