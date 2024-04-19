@@ -36,7 +36,9 @@ const PatientLogin = () => {
       const handleLogin = () => {
         signInAs(email, password, "patient");
     };
-
+    const handleclick = () => {
+    navigate("/patientsignup")
+    };
     return (
         <div
             className="MacbookPro141 w-full  h-screen bg-stone-900 flex justify-between items-center">
@@ -82,7 +84,7 @@ const PatientLogin = () => {
                     <div
                         className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">DONT HAVE AN ACCOUNT?
                         <br/>
-                        <span className="underline">Click here</span>
+                      <button className="underline"onClick={handleclick}>Click here</button>
                     </div>
                 </div>
             </div>
