@@ -11,6 +11,7 @@ import SignUp from './pages/signup.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PatientLogin from './pages/PatientLogin.js';
 import PatientSignUp from './pages/psignup.js';
+import DoctorSignup from './pages/dsignup.js';
 function App() {
     const [user, setUser] = useState(null);
 
@@ -31,7 +32,8 @@ function App() {
                         <Route path='*'element=    {
                         user
                             ? <Main user={user}/>
-                            : <Landing/>
+                            //: <Landing/>
+                            : <DoctorSignup/>
                     }/>
                     <Route path='/patientlogin' element={<PatientLogin/>}/>   
                     <Route path='/patientsignup' element={<PatientSignUp/>}/>   
