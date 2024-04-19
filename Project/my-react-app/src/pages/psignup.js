@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const PatientSignUp = () => {
 
     return (
-       <div>hi</div>
+       <div>hi patient</div>
     )
 }
 
