@@ -34,6 +34,7 @@ const DoctorSignUp = () => {
                             placeholder="example@gmail.com"
                             className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/>
                     </div>
+                    
                     <div className="Emailflex w-full justify-start items-center gap-2.5">
                         <input
                             value={confirmEmail}

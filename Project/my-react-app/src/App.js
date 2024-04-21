@@ -33,8 +33,8 @@ function App() {
                         <Route path='*'element=    {
                         user
                             ? <Main user={user}/>
-                            //: <Landing/>
-                            : <DoctorSignup/>
+                            : <Landing/>
+                            //: <DoctorSignup/>
                     }/>
                     <Route path='/patientlogin' element={<PatientLogin/>}/>   
                     <Route path='/patientsignup' element={<PatientSignUp/>}/>   
