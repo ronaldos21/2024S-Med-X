@@ -11,7 +11,12 @@ import SignUp from './pages/signup.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PatientLogin from './pages/PatientLogin.js';
 import PatientSignUp from './pages/psignup.js';
+<<<<<<< HEAD
 import DoctorSignup from './pages/dsignup.js';
+=======
+import DoctorLogin from './pages/DoctorLogin.js';
+import DoctorSignUp from './pages/dsignup.js';
+>>>>>>> feat/login
 function App() {
     const [user, setUser] = useState(null);
 
@@ -37,8 +42,8 @@ function App() {
                     }/>
                     <Route path='/patientlogin' element={<PatientLogin/>}/>   
                     <Route path='/patientsignup' element={<PatientSignUp/>}/>   
-                    <Route path='/doctorlogin' element={<PatientLogin/>}/>
-                    <Route path='/doctorsignup' element={<PatientLogin/>}/>
+                    <Route path='/doctorlogin' element={<DoctorLogin/>}/>
+                    <Route path='/doctorsignup' element={<DoctorSignUp/>}/>
                     </Routes>
                 
                 </div>

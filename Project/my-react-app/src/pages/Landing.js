@@ -23,7 +23,9 @@ const Landing = () => {
   const signInAsPatient = () => {
     navigate('/patientlogin')
   };
-
+  const signInAsDoctor = () => {
+    navigate('/doctorlogin')
+  };
   return (
     <div className="Preview w-full h-screen flex-col justify-center items-center gap-2.5 inline-flex bg-primary">
       <div className="Logo flex-col justify-start items-start gap-7 flex">
@@ -34,7 +36,7 @@ const Landing = () => {
       </div>
       <div className="Content self-stretch h-96  flex-col justify-center items-center gap-5 flex">
         <div className="Select self-stretch justify-between items-center inline-flex">
-          <div className="Doctor grow shrink basis-0 self-stretch px-5 py-2.5 flex-col justify-center items-center gap-2.5 inline-flex" >
+          <div className="Doctor grow shrink basis-0 self-stretch px-5 py-2.5 flex-col justify-center items-center gap-2.5 inline-flex" onClick={signInAsDoctor}>
             <img className="Image2 w-48 h-72" src={Doctor} alt="Doctor" />
             <div className="Doctor text-white text-4xl font-normal font-['Inter']">Doctor</div>
           </div>
