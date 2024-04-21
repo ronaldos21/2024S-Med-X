@@ -11,12 +11,8 @@ import SignUp from './pages/signup.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PatientLogin from './pages/PatientLogin.js';
 import PatientSignUp from './pages/psignup.js';
-<<<<<<< HEAD
-import DoctorSignup from './pages/dsignup.js';
-=======
 import DoctorLogin from './pages/DoctorLogin.js';
 import DoctorSignUp from './pages/dsignup.js';
->>>>>>> feat/login
 function App() {
     const [user, setUser] = useState(null);
 
