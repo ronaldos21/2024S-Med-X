@@ -174,11 +174,11 @@ const DoctorSignUp = () => {
             <div
                 className="Bg  w-[70%] h-full p-7 flex-col justify-end items-end inline-flex">
                 <div className="Logo w-48 h-48 justify-center items-center inline-flex">
-                    <img className="Logo" src={Logo} />
+                    <img alt="Logo" src={Logo} />
                 </div>
                 <div
                     className="Frame6 self-stretch grow shrink basis-0 justify-center items-center gap-2.5 inline-flex">
-                    <img className="Image4 h-full" src={DoctorImage} />
+                    <img alt="Image4 h-full" src={DoctorImage} />
                 </div>
             </div>
 
