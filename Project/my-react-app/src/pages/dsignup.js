@@ -126,8 +126,8 @@ const DoctorSignUp = () => {
                             className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
 
                     </div>
-                    <div className="Password w-full justify-between items-center gap-2.5">
-                      <div       className="flex py-px h-12 w-full px-5 justify-between bg-white rounded-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal">
+                    <div className="Password flex-row flex w-full justify-between items-center ">
+                      <div       className="flex py-px h-12 w-full px-5 justify-between bg-white rounded-l-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal">
                       <input
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -137,7 +137,10 @@ const DoctorSignUp = () => {
                                 : 'password'}
                             placeholder="Enter a password"
                       />
-                        <button
+                       
+                      </div>
+                      <div className="h-full w-10 flex justify-center items-center rounded-r-2xl  bg-customWhite py-px">
+                      <button
                             type="button"
                             className="text-customPurple"
                             onClick={togglePasswordVisibility}>
@@ -148,7 +151,7 @@ const DoctorSignUp = () => {
                 )}
                         </button>
                       </div>
-                  
+                   
 
                         {/* Display error message under the password input */}
                         {passwordError && <p className="text-red-500 text-sm italic">{passwordError}</p>}
