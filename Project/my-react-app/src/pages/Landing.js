@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import Logo from '../components/img/Logo.png';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from '../components/session/AuthContext'; // Import useAuth hook
-import Devider from  '../components/img/image 3.png'
+import Devider from '../components/img/image 3.png'
 import Doctor from '../components/img/doctor il.png'
 import Patient from '../components/img/patient il.png'
 import { useNavigate } from 'react-router-dom';
@@ -12,14 +11,14 @@ const Landing = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      const user = JSON.parse(localStorage.getItem('user'));
-      const userType = localStorage.getItem('userType');
-      if (user && userType) {
-        setUser(user);
-        setUserType(userType);
-        navigate('/', { replace: true });
-      }
-    }, []); 
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userType = localStorage.getItem('userType');
+    if (user && userType) {
+      setUser(user);
+      setUserType(userType);
+      navigate('/', { replace: true });
+    }
+  }, []);
   const signInAsPatient = () => {
     navigate('/patientlogin')
   };
