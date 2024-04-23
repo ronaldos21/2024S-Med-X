@@ -85,11 +85,9 @@ const ReportPage = () => {
         return (
             <div className="w-full h-full pl-[30px] pr-[15px] pt-[15px] pb-[30px] justify-start items-start gap-5 inline-flex">
                 <div className="self-stretch p-5 flex-col justify-start items-start gap-5 inline-flex">
-                    <div className="Report text-white text-5xl font-normal">
-
-                    </div>
-                    <div className="w-[314px] h-[418px] rounded-[20px] flex-col justify-center items-start gap-5 flex">
-                        <img className="rounded-[20px] object-cover w-full h-full"
+                    <div className="Report text-center text-white text-4xl  font-normal font-['Inter']">Results</div>
+                    <div className="w-[200px] h-[300px] rounded-[20px] flex-col justify-center items-start gap-5 flex">
+                        <img className="rounded-[10px] object-cover w-full h-full"
                             src={report.data.xr_image}
 
                             alt="Report_image"
@@ -100,30 +98,30 @@ const ReportPage = () => {
                     <div className="self-stretch p-5 flex-col justify-center items-center gap-5 flex">
                         <div className="self-stretch h-12 justify-between items-center inline-flex">
                             <div className="text-center text-white text-3xl font-normal font-['Inter']">Report ID: #{report.id}</div>
-                            <div className="text-indigo-300 text-2xl font-normal font-['Inter']">
+                            <div className="text-customGreen font-normal font-['Inter']">
                                 {report.data.scan_date.toDate().toLocaleString()}
                             </div>
                         </div>
                         <div className="self-stretch h-full flex-col justify-start items-start gap-5 flex">
-                            <div className="text-center text-indigo-300 text-5xl font-normal font-['Inter']">
+                            <div className="text-center text-customPurple text-xl font-normal font-['Inter']">
                             {report.data.medical_term}
                             
 
                             </div>
-                            <div className="text-white text-2xl">
+                            <div className="self-stretch text-justify text-white font-normal font-['Inter'] text-wrap w-1/2">
                             {report.data.medical_description}
                             </div>
                         </div>
                     </div>
                     <div className="self-stretch h-full flex-col justify-center items-end gap-5 flex">
                         <div className="self-stretch justify-start items-center gap-5 inline-flex">
-                            <div className="text-center text-white text-3xl font-normal font-['Inter']">Report status:</div>
+                            <div className="text-center text-white text-xl font-normal font-['Inter']">Report status:</div>
                             <StatusButton status={report.data.status} />
                         </div>
                     </div>
                     <div className="self-stretch h-full flex-col justify-center items-end gap-5 flex">
                         <div className="self-stretch h-full flex-col justify-center items-start gap-5 flex">
-                            <div className="text-center text-white text-3xl font-normal font-['Inter']">Doctor's Message:</div>
+                            <div className="text-center text-white text-xl font-normal font-['Inter']">Doctor's Message:</div>
                             <div className="self-stretch h-full p-2.5 bg-neutral-900 rounded-[20px] flex-col justify-center items-center gap-2.5 flex">
                                 <div className="self-stretch text-justify text-white text-2xl font-normal font-['Inter']">
                                     {report.data.mp_comment}
@@ -150,9 +148,7 @@ const ReportPage = () => {
         return (
             <div className="w-full h-full pl-[30px] pr-[15px] pt-[15px] pb-[30px] justify-start items-start gap-5 inline-flex" key={refreshKey}>
                 <div className="self-stretch p-5 flex-col justify-start items-start gap-5 inline-flex">
-                    <div className="Report text-white text-5xl font-normal">Results
-
-                    </div>
+                    <div className="Report text-center text-white text-4xl  font-normal font-['Inter']">Results</div>
                     <div className="w-[314px] h-[418px] rounded-[20px] flex-col justify-center items-start gap-5 flex">
                         <img className="rounded-[20px] object-cover w-full h-full"
                             src={report.data.xr_image}
@@ -164,7 +160,7 @@ const ReportPage = () => {
                 <div className="grow shrink basis-0 self-stretch flex-col justify-center items-center gap-5 inline-flex">
                     <div className="self-stretch p-5 flex-col justify-center items-center gap-5 flex">
                         <div className="self-stretch h-12 justify-between items-center inline-flex">
-                            <div className="text-center text-white text-3xl font-normal font-['Inter']">Report# {report.id}</div>
+                            <div className="text-center text-white text-3xl font-normal font-['Inter']">Report ID: #{report.id}</div>
                             <div className="text-indigo-300 text-2xl font-normal font-['Inter']">  {report.data.scan_date.toDate().toLocaleString()}
 
                             </div>
@@ -177,17 +173,17 @@ const ReportPage = () => {
                     </div>
                     <div className="self-stretch h-full flex-col justify-center items-end gap-5 flex">
                         <div className="self-stretch justify-start items-center gap-5 inline-flex">
-                            <div className="text-center text-white text-3xl font-normal font-['Inter']">Report status:</div>
+                            <div className="text-center text-white text-xl font-normal font-['Inter']">Report status:</div>
                             <StatusButton status={report.data.status} />
                         </div>
                     </div>
                     <div className="self-stretch h-full flex-col justify-center items-end gap-5 flex">
                         <div className="self-stretch h-full flex-col justify-center items-start gap-5 flex">
-                            <div className="text-center text-white text-3xl font-normal font-['Inter']">Your Comment:</div>
+                            <div className="text-center text-white text-xl font-normal font-['Inter']">Your Comment:</div>
                             <div className="self-stretch h-full p-2.5 bg-neutral-900 rounded-[20px] flex-col justify-center items-center gap-2.5 flex">
                                 <div className="self-stretch grow shrink basis-0 text-justify text-white text-2xl font-normal font-['Inter']">
                                     <form onSubmit={(e) => handleSubmit(e, report.id, comment)}>
-                                        <label htmlFor="comment" className="block text-white">Medical Practitioner's comment:</label>
+                                        <label htmlFor="comment" className="block text-white text-xl font-normal font-['Inter']">Medical Practitioner's comment:</label>
                                         <textarea
                                             id="comment"
                                             className="w-full bg-neutral-800 text-white rounded p-2"
