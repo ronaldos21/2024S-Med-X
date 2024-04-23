@@ -105,8 +105,6 @@ const ReportPage = () => {
                         <div className="self-stretch h-full flex-col justify-start items-start gap-5 flex">
                             <div className="text-center text-customPurple text-xl font-normal font-['Inter']">
                             {report.data.medical_term}
-                            
-
                             </div>
                             <div className="self-stretch text-justify text-white font-normal font-['Inter'] text-wrap w-1/2">
                             {report.data.medical_description}
@@ -149,8 +147,8 @@ const ReportPage = () => {
             <div className="w-full h-full pl-[30px] pr-[15px] pt-[15px] pb-[30px] justify-start items-start gap-5 inline-flex" key={refreshKey}>
                 <div className="self-stretch p-5 flex-col justify-start items-start gap-5 inline-flex">
                     <div className="Report text-center text-white text-4xl  font-normal font-['Inter']">Results</div>
-                    <div className="w-[314px] h-[418px] rounded-[20px] flex-col justify-center items-start gap-5 flex">
-                        <img className="rounded-[20px] object-cover w-full h-full"
+                    <div className="w-[200px] h-[300px] rounded-[20px] flex-col justify-center items-start gap-5 flex">
+                        <img className="rounded-[10px] object-cover w-full h-full"
                             src={report.data.xr_image}
 
                             alt="Report_image"
@@ -161,13 +159,16 @@ const ReportPage = () => {
                     <div className="self-stretch p-5 flex-col justify-center items-center gap-5 flex">
                         <div className="self-stretch h-12 justify-between items-center inline-flex">
                             <div className="text-center text-white text-3xl font-normal font-['Inter']">Report ID: #{report.id}</div>
-                            <div className="text-indigo-300 text-2xl font-normal font-['Inter']">  {report.data.scan_date.toDate().toLocaleString()}
+                            <div className="text-customGreen font-normal font-['Inter']">  {report.data.scan_date.toDate().toLocaleString()}
 
                             </div>
                         </div>
                         <div className="self-stretch h-full flex-col justify-start items-start gap-5 flex">
-                            <div className="text-center text-indigo-300 text-5xl font-normal font-['Inter']">    {report.data.medical_term}
-
+                            <div className="text-center text-customPurple text-xl font-normal font-['Inter']">    
+                            {report.data.medical_term}
+                            </div>
+                            <div className="self-stretch text-justify text-white font-normal font-['Inter'] text-wrap w-1/2">
+                            {report.data.medical_description}
                             </div>
                         </div>
                     </div>
