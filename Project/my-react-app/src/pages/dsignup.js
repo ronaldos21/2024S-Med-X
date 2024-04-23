@@ -111,11 +111,11 @@ const DoctorSignUp = () => {
                             type="email"
                             id="grid-first-email"
                             placeholder="Email"
-                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl focus:outline-none flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
 
                     </div>
 
-                    <div className="Emailflex w-full justify-start items-center gap-2.5">
+                    <div className="Emailflex w-full justify-start items-center gap-2.5 ">
                         <input
                             value={confirmEmail}
                             onChange={(e) => setConfirmEmail(e.target.value)}
@@ -123,41 +123,37 @@ const DoctorSignUp = () => {
                             type="email"
                             id="grid-confirm-email"
                             placeholder="Confirm email"
-                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl focus:outline-none  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
 
                     </div>
-                    <div className="Password flex-row flex w-full justify-between items-center ">
-                      <div       className="flex py-px h-12 w-full px-5 justify-between bg-white rounded-l-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal">
-                      <input
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required="required"
-                            type={showPassword
-                                ? 'text'
-                                : 'password'}
-                            placeholder="Enter a password"
-                      />
-                       
-                      </div>
-                      <div className="h-full w-10 flex justify-center items-center rounded-r-2xl  bg-customWhite py-px">
-                      <button
-                            type="button"
-                            className="text-customPurple"
-                            onClick={togglePasswordVisibility}>
-                          {showPassword ? (
-                    <img src={Hide} alt="Hide" className="w-7 h-w-7"/>
-                ) : (
-                    <img src={UnHide} alt="Unhide" className="w-7 h-w-7"/>
-                )}
-                        </button>
-                      </div>
-                   
+                    <div className="Password flex-row flex w-full justify-between items-center focus:outline-none ">
+            <div className="flex py-px h-12 w-full px-5 justify-between bg-white rounded-l-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal focus:ring-0">
+                <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter a password"
+                    className="w-full outline-none"
+                />
+            </div>
+            <div className="h-full w-10 flex justify-center items-center rounded-r-2xl bg-customWhite py-px">
+                <button
+                    type="button"
+                    className="text-customPurple focus:outline-none"
+                    onClick={togglePasswordVisibility}
+                >
+                    {showPassword ? (
+                        <img src={Hide} alt="Hide" className="w-7 h-w-7" />
+                    ) : (
+                        <img src={UnHide} alt="Unhide" className="w-7 h-w-7" />
+                    )}
+                </button>
+            </div>
 
-                        {/* Display error message under the password input */}
-                        {passwordError && <p className="text-red-500 text-sm italic">{passwordError}</p>}
-
-                    </div>
-
+            {/* Display error message under the password input */}
+            {passwordError && <p className="text-red-500 text-sm italic">{passwordError}</p>}
+        </div>
                     {<div className="text-red-500">{""}</div>}
                     <button
                         className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center">

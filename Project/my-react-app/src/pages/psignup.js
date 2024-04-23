@@ -123,7 +123,7 @@ const PatientSignUp = () => {
 
                 </div>
 
-                <div className="Emailflex w-full justify-start items-center gap-2.5">
+                <div className="Email flex w-full justify-start items-center gap-2.5">
                     <input
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -134,7 +134,7 @@ const PatientSignUp = () => {
 
                 </div>
 
-                <div className="Emailflex w-full justify-start items-center gap-2.5">
+                <div className="Email flex w-full justify-start items-center gap-2.5">
                     <input
                         value={confirmEmail}
                         onChange={(e) => setConfirmEmail(e.target.value)}
