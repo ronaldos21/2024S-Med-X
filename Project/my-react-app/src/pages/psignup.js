@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../components/img/Logo.png';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../firebase';
-import {db} from '../firebase'; // Import your Firebase configuration
-import {setDoc, doc} from 'firebase/firestore';
-import {useAuth} from '../components/session/AuthContext';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+import { db } from '../firebase'; // Import your Firebase configuration
+import { setDoc, doc } from 'firebase/firestore';
+import { useAuth } from '../components/session/AuthContext';
 import PatientImage from "../components/img/patient il2.png";
 
 import Hide from "../components/img/icons/hide.svg";
@@ -19,7 +19,7 @@ const PatientSignUp = () => {
     const [emailError, setEmailError] = useState(null); //Separate state for email errors
     const [passwordError, setPasswordError] = useState(null); //Separate state for password errors
     const [showPassword, setShowPassword] = useState(false); // State to control password visibility
-    const {setUser, setUserType} = useAuth(); // Access setUser and setUserType from AuthContext
+    const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
 
     const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ const PatientSignUp = () => {
             setUserType(type); // Set the user type after successful sign-in
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('userType', type);
-            navigate('/', {replace: true});
+            navigate('/', { replace: true });
 
             // Step 2: Submit the Form
             const form = e.target;
@@ -94,11 +94,11 @@ const PatientSignUp = () => {
         <div
             className="Bg  w-[70%] h-full p-7 flex-col justify-start items-start inline-flex">
             <div className="Logo w-48 h-48 justify-center items-center inline-flex">
-                <img alt="Logo" src={Logo}/>
+                <img alt="Logo" src={Logo} />
             </div>
             <div
                 className="Frame6 self-stretch grow shrink basis-0 justify-center items-center gap-2.5 inline-flex">
-                <img alt="Image4 h-full" src={PatientImage}/>
+                <img alt="Image4 h-full" src={PatientImage} />
             </div>
         </div>
         <form
@@ -119,7 +119,7 @@ const PatientSignUp = () => {
                         type="text"
                         placeholder="Enter your First Name"
                         id="grid-first-name"
-                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/>
+                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
 
                 </div>
 
@@ -130,7 +130,7 @@ const PatientSignUp = () => {
                         required="required"
                         type="email"
                         placeholder="Enter an email"
-                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" /> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
 
                 </div>
 
@@ -142,7 +142,7 @@ const PatientSignUp = () => {
                         type="email"
                         id="grid-confirm-email"
                         placeholder="Confirm email"
-                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" /> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
 
                 </div>
 
@@ -158,18 +158,18 @@ const PatientSignUp = () => {
                                 ? 'text'
                                 : 'password'}
                             placeholder="Enter a password"
-                            className="w-full"/>
-                   
+                            className="w-full" />
+
                     </div>  <div className="h-full w-10 flex justify-center items-center rounded-r-2xl  bg-customWhite py-px">
-                      <button
+                        <button
                             type="button"
                             className="text-customPurple"
                             onClick={togglePasswordVisibility}>
-                          {showPassword ? (
-                    <img src={Hide} alt="Hide" className="w-7 h-w-7"/>
-                ) : (
-                    <img src={UnHide} alt="Unhide" className="w-7 h-w-7"/>
-                )}
+                            {showPassword ? (
+                                <img src={Hide} alt="Hide" className="w-7 h-w-7" />
+                            ) : (
+                                <img src={UnHide} alt="Unhide" className="w-7 h-w-7" />
+                            )}
                         </button></div>
 
                     {/* Display error message under the password input */}
@@ -184,7 +184,7 @@ const PatientSignUp = () => {
                 </button>
                 <div
                     className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">HAVE AN ACCOUNT?
-                    <br/>
+                    <br />
                     <button className="underline" onClick={handleclick}>Click here</button>
                 </div>
             </div>
