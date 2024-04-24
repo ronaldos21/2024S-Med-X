@@ -214,16 +214,23 @@ const ReportPage = () => {
                     </div>
                 </div>
                 <div className='flex w-full justify-end items-end pr-5 h-full'>
-                <div >
+                    <div className='flex flex-row gap-3'>
                         <PrintableReport
-                            result={report.data.medical_term}
-                            url={report.data.xr_image}
-                            nextReportId={report.id}
-                            formattedDate={report.data.scan_date}
-                            comment={report.data.mp_comment}
-                            pname={report.data.patientName}
-                            desc={report.data.medical_description}
-                            />
+                                result={report.data.medical_term}
+                                url={report.data.xr_image}
+                                nextReportId={report.id}
+                                formattedDate={report.data.scan_date}
+                                comment={report.data.mp_comment}
+                                pname={report.data.patientName}
+                                desc={report.data.medical_description}
+                                />
+                        <div className='group'>
+                            <button
+                                className="group-hover:bg-slate-700 px-5 py-2.5 text-primary bg-white bg-opacity-80 rounded-[5px] justify-start items-start gap-2.5 inline-flex active:bg-green-700 focus:ring focus:ring-gray-700"
+                                onClick={(e) => handleSubmit(e, report.id, comment)}>
+                                <div className='group-hover:text-white'>Update Report</div>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
