@@ -57,7 +57,7 @@ const Notification = () => {
                 <div />
                 <IoIosNotifications
                     className="inline-flex justify-center items-center w-[50px] h-[50px] cursor-pointer"
-                    style={{ fontSize: '30px', color: 'white' }}
+                    style={{ fontSize: '30px', color: hasChanges ? 'red' : 'white' }}
                     onClick={toggleDropdown}
                 />
         </div>
