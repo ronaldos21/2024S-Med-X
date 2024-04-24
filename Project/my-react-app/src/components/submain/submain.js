@@ -10,13 +10,11 @@ import { Routes, Route } from "react-router-dom";
 import Images from "../../pages/images";
 import ReportGallery from "../../pages/reportgallery";
 import ReportPage from "../../pages/reportpage";
-
 const Submain = () => {
     return (
         <div className="h-full w-full flex flex-col ">
             <Topbar/>
              <Routes> 
-                {/* Render patient or doctor dashboard based on user*/}
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/medexer" element={<Medexer />} /> 
                 <Route path="/report" element={<Report />} />
