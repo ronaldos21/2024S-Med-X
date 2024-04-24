@@ -87,42 +87,7 @@ const ReportPage = () => {
 
     if (userType === "patient") {
         return (
-            // <div className="w-full h-full justify-start items-start  inline-flex"> <div
-            // className="self-stretch p-5 flex-col justify-start items-start inline-flex">
-            // <div className="Report text-center text-white text-4xl font-normal
-            // font-['Inter']">Results</div>         <div className="w-[200px] h-[300px]
-            // rounded-[20px] flex-col justify-center items-start  flex"> <img
-            // className="rounded-[10px] object-cover w-full h-full"
-            // src={report.data.xr_image}                 alt="Report_image"             />
-            // </div>     </div>     <div className="grow shrink basis-0 self-stretch
-            // flex-col justify-center items-center  inline-flex">         <div
-            // className="w-1/2 self-stretch h-12 justify-between items-center inline-flex
-            // ">             <div className="text-center text-white text-3xl font-normal
-            // font-['Inter']">Report ID: #{report.id}</div>             <div
-            // className="text-customGreen font-normal
-            // font-['Inter']">{report.data.scan_date.toDate().toLocaleString()}</div>
-            // </div>         <div className="self-stretch flex-col justify-start
-            // items-start flex">             <div className="text-center text-customPurple
-            // text-xl font-normal font-['Inter']">{report.data.medical_term}</div> <div
-            // className="self-stretch text-justify text-white font-normal font-['Inter']
-            // text-wrap w-1/2">{report.data.medical_description}</div> </div>         <div
-            // className="self-stretch h-full flex-col justify-center items-end  flex"> <div
-            // className="self-stretch justify-start items-center  inline-flex"> <div
-            // className="text-center text-white text-xl font-normal font-['Inter']">Report
-            // status:</div> <StatusButton status={report.data.status} />             </div>
-            // </div>         <div className="self-stretch h-full flex-col justify-center
-            // items-end flex"> <div className="self-stretch h-full flex-col justify-center
-            // items-start flex">                 <div className="text-center text-white
-            // text-xl font-normal font-['Inter']">Doctor's Message:</div> <div
-            // className="self-stretch h-full p-2.5 bg-neutral-900 rounded-[20px] flex-col
-            // justify-center items-center gap-2.5 flex">                     <div
-            // className="self-stretch text-justify text-white text-2xl font-normal
-            // font-['Inter']">                         {report.data.mp_comment} </div>
-            // </div>             </div>             <PrintableReport
-            // result={report.data.medical_term}                 url={report.data.xr_image}
-            // nextReportId={report.id} formattedDate={report.data.scan_date}
-            // comment={report.data.mp_comment} pname={report.data.patientName} /> </div>
-            // </div> </div>
+            
             <div className='flex h-full items-start flex-col'>
 
                 <div className="Report text-white text-4xl p-5 justify-start">Results</div>
