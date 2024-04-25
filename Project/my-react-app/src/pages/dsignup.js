@@ -62,7 +62,7 @@ const DoctorSignUp = () => {
                 mp_email: email,
                 mp_password: password,
                 p_name: email,
-                user_type: "0"
+                user_type: "1"
             };
             const reportDocRef = doc(db, 'Medical Professional', user.uid);
             await setDoc(reportDocRef, doctorData);
