@@ -53,13 +53,16 @@ const Notification = () => {
 
   return (
     <div className="relative h-full" ref={dropdownRef}>
-        <div className="flex justify-center items-center gap-2.5 bg-neutral-900 rounded-full h-full p-2.5">
+        <div className="flex justify-center items-center gap-1 bg-neutral-900 rounded-full h-full p-1.5">
                 <div />
                 <IoIosNotifications
                     className="inline-flex justify-center items-center w-[50px] h-[50px] cursor-pointer"
-                    style={{ fontSize: '30px', color: hasChanges ? 'red' : 'white' }}
+                    style={{ fontSize: '30px', color: 'white' }}
                     onClick={toggleDropdown}
                 />
+                {hasChanges && (
+                        <div style={{ position: 'absolute', top: '10px', right: '14px', width: '8px', height: '8px', borderRadius: '50%', background: 'red' }} />
+                    )}
         </div>
         {isDropdownOpen && (
                 <div className="absolute top-full right-2 mt-1  w-48 bg-primary shadow-lg rounded-lg">
