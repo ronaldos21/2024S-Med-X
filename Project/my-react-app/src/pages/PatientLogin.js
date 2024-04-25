@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Logo from "../components/img/Logo.png";
 import PatientImage from "../components/img/patient il2.png";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword ,signOut} from "firebase/auth";
 import { useAuth } from '../components/session/AuthContext'; // Import useAuth hook
 import { useNavigate } from 'react-router-dom';
 
@@ -19,11 +19,17 @@ const PatientLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                setUser(user);
-                setUserType(type); // Set the user type after successful sign-in
-                localStorage.setItem('user', JSON.stringify(user));
-                localStorage.setItem('userType', type);
-                navigate('/');
+                if (isDoctor(user)) {
+                    setUser(user);
+                    setUserType(type); // Set the user type after successful sign-in
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('userType', type);
+                    navigate('/');
+                } else {
+                    setError("You are not authorized to log in as a doctor.");
+                    const auth = getAuth();
+                    signOut(auth)
+                }
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -31,7 +37,11 @@ const PatientLogin = () => {
                 setError(error.code);
             });
     };
-
+    const isDoctor = (user) => {
+        // Assuming user_type is a property in the user object
+        // Check if user_type is equal to 1
+        return user.user_type === 1;
+    };
     const handleLogin = () => {
         signInAs(email, password, "patient");
     };
