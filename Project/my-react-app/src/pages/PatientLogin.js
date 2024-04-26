@@ -4,7 +4,9 @@ import PatientImage from "../components/img/patient il2.png";
 import { getAuth, signInWithEmailAndPassword ,signOut} from "firebase/auth";
 import { useAuth } from '../components/session/AuthContext'; // Import useAuth hook
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase';
 
+import {doc,getDoc } from "firebase/firestore";
 const PatientLogin = () => {
 
     const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
@@ -13,38 +15,50 @@ const PatientLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // Run only once on component mount
-    const signInAs = (email, password, type) => {
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                if (isDoctor(user)) {
-                    setUser(user);
-                    setUserType(type); // Set the user type after successful sign-in
-                    localStorage.setItem('user', JSON.stringify(user));
-                    localStorage.setItem('userType', type);
-                    navigate('/');
+    const handleLogin = async (email, password,type) => {
+        try {
+            console.log(email,password)
+            const auth = getAuth();
+            // Sign in user
+            await signInWithEmailAndPassword(auth, email, password);
+    
+            // Get current user
+            const currentUser = auth.currentUser;
+    
+            if (currentUser) {
+                // Get user document from Firestore
+                
+                const patientDoc = doc(db, 'Patient',currentUser.uid);
+                const userDoc = await getDoc(patientDoc);
+                console.log(userDoc._document)
+                if (userDoc._document!=null) {
+                                setUser(currentUser);
+                                setUserType(type); // Set the user type after successful sign-in
+                                localStorage.setItem('user', JSON.stringify(currentUser));
+                                localStorage.setItem('userType', type);
+                                navigate('/');
                 } else {
+                    // User document does not exist
+
                     setError("You are not authorized to log in as a doctor.");
                     const auth = getAuth();
                     signOut(auth)
+                    // Handle this case
                 }
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setError(error.code);
-            });
+            } else {
+                console.log("No user signed in")
+                // No user signed in
+                // Handle this case
+            }
+        } catch (error) {
+            // Handle errors
+            console.error("Error handling login:", error);
+        }
     };
-    const isDoctor = (user) => {
-        // Assuming user_type is a property in the user object
-        // Check if user_type is equal to 1
-        return user.user_type === 1;
-    };
-    const handleLogin = () => {
-        signInAs(email, password, "patient");
-    };
+    
+    
+    
+    
     const handleclick = () => {
         navigate("/patientsignup")
     };
@@ -86,7 +100,7 @@ const PatientLogin = () => {
                             className="flex py-px h-12 w-full px-5 bg-white rounded-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div> {error && <div className="text-red-500">{error}</div>}
                     <button
-                        className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center" onClick={handleLogin}>
+                        className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center" onClick={() => handleLogin(email, password,"patient")}>
                         <div
                             className="Loginbutton text-white text-base font-normal flex justify-center items-center">Login</div>
                     </button>
