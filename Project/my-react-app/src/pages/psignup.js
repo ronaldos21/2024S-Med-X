@@ -130,7 +130,7 @@ const PatientSignUp = () => {
                         required="required"
                         type="email"
                         placeholder="Enter an email"
-                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" /> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" /> 
 
                 </div>
 
@@ -142,7 +142,7 @@ const PatientSignUp = () => {
                         type="email"
                         id="grid-confirm-email"
                         placeholder="Confirm email"
-                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" /> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                        className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" /> 
 
                 </div>
 
@@ -172,11 +172,10 @@ const PatientSignUp = () => {
                             )}
                         </button></div>
 
-                    {/* Display error message under the password input */}
-                    {passwordError && <p className="text-red-500 text-sm italic">{passwordError}</p>}
-
+                  
                 </div>
-
+                {<div className="text-red-500">{   emailError }</div>}
+                {<div className="text-red-500">{passwordError  }</div>}
                 <button
                     className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center">
                     <div

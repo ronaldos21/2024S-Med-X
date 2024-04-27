@@ -110,7 +110,7 @@ const DoctorSignUp = () => {
                             type="email"
                             id="grid-first-email"
                             placeholder="Email"
-                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl focus:outline-none flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl focus:outline-none flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> 
 
                     </div>
 
@@ -122,7 +122,7 @@ const DoctorSignUp = () => {
                             type="email"
                             id="grid-confirm-email"
                             placeholder="Confirm email"
-                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl focus:outline-none  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/> {emailError && <p className="text-red-500 text-sm italic">{emailError}</p>}
+                            className="w-full flex h-12 px-5 py-px bg-white rounded-2xl focus:outline-none  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"/>
 
                     </div>
                     <div className="Password flex-row flex w-full justify-between items-center focus:outline-none ">
@@ -149,11 +149,10 @@ const DoctorSignUp = () => {
                     )}
                 </button>
             </div>
-
-            {/* Display error message under the password input */}
-            {passwordError && <p className="text-red-500 text-sm italic">{passwordError}</p>}
         </div>
-                    {<div className="text-red-500">{""}</div>}
+                    {<div className="text-red-500">{   emailError }</div>}
+                    {<div className="text-red-500">{passwordError  }</div>}
+                 
                     <button
                         className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center">
                         <div
