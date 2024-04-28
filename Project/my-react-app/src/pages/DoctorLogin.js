@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import DoctorImage from "../components/img/doctor il2.png";
 import { db } from '../firebase';
 import {doc,getDoc } from "firebase/firestore";
+
+import Hide from "../components/img/icons/hide.svg";
+import UnHide from "../components/img/icons/unhide.svg";
 const DoctorLogin = () => {
 
     const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
@@ -14,51 +17,49 @@ const DoctorLogin = () => {
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [showPassword, setShowPassword] = useState(false); 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     // Run only once on component mount
-    const handleLogin = async (email, password,type) => {
+    const handleLogin = async (email, password, type) => {
         try {
-            console.log(email,password)
+            // Authenticate user
             const auth = getAuth();
-            // Sign in user
-            await signInWithEmailAndPassword(auth, email, password);
-    
-            // Get current user
-            const currentUser = auth.currentUser;
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const currentUser = userCredential.user;
     
             if (currentUser) {
-                // Get user document from Firestore
-                
-                const doctorDoc = doc(db, 'Medical Professional',currentUser.uid);
-                const userDoc = await getDoc(doctorDoc);
-                console.log(userDoc._document)
-                if (userDoc._document!=null) {
-                                setUser(currentUser);
-                                setUserType(type); // Set the user type after successful sign-in
-                                localStorage.setItem('user', JSON.stringify(currentUser));
-                                localStorage.setItem('userType', type);
-                                navigate('/');
+                // Check user type
+                const userTypeDocRef = doc(db, 'Medical Professional', currentUser.uid);
+                const userTypeDocSnapshot = await getDoc(userTypeDocRef);
+    
+                if (userTypeDocSnapshot.exists()) {
+                    // Authorized user
+                    setUser(currentUser);
+                    setUserType(type);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    localStorage.setItem('userType', type);
+                    navigate('/');
                 } else {
-                    // User document does not exist
-
-                    setError("You are not authorized to log in as a Patient.");
-                    const auth = getAuth();
-                    signOut(auth)
-                    // Handle this case
+                    // Unauthorized user
+                    setError("You are not authorized to log in as a docotor.");
+                    await signOut(auth);
                 }
             } else {
-                console.log("No user signed in")
-                // No user signed in
-                // Handle this case
+                console.log("No user signed in");
+                // Handle case where no user is signed in
             }
         } catch (error) {
             // Handle errors
-            console.error("Error handling login:", error);
+            setError(error.message); // Display error message to user
         }
     };
+    
     const handleclick = () => {
-        navigate("/doctorsignup")
+        navigate("/doctorsignup");
     };
+    
     return (
         <div
             className="MacbookPro141 w-full  h-screen bg-stone-900 flex justify-between items-center">
@@ -79,13 +80,31 @@ const DoctorLogin = () => {
                             placeholder="example@gmail.com"
                             className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div>
-                    <div className="Password w-full justify-start items-center gap-2.5">
-                        <input value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            placeholder="********"
-                            className="flex py-px h-12 w-full px-5 bg-white rounded-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
-                    </div> {error && <div className="text-red-500">{error}</div>}
+                    <div className="Password flex-row flex w-full justify-between items-center focus:outline-none ">
+            <div className="flex py-px h-12 w-full px-5 justify-between bg-white rounded-l-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal focus:ring-0">
+                <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter a password"
+                    className="w-full outline-none"
+                />
+            </div>
+            <div className="h-full w-10 flex justify-center items-center rounded-r-2xl bg-customWhite py-px">
+                <button
+                    type="button"
+                    className="text-customPurple focus:outline-none"
+                    onClick={togglePasswordVisibility}
+                >
+                    {showPassword ? (
+                        <img src={Hide} alt="Hide" className="w-7 h-w-7" />
+                    ) : (
+                        <img src={UnHide} alt="Unhide" className="w-7 h-w-7" />
+                    )}
+                </button>
+            </div>
+        </div> {error && <div className="text-red-500">{error}</div>}
                     <button
                         className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center"  onClick={() => handleLogin(email, password,"doctor")}>
                         <div
