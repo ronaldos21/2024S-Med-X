@@ -44,7 +44,7 @@ const [notification, setNotification] = useState("");
 
                 console.log (modifiedData)
                 setNotification("comment:" + modifiedData.mp_comment + " report id:" + documentId);
-
+                setHasChanges(true)
                 //console.log(notification);
             }
         });
