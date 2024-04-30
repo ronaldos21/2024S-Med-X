@@ -84,6 +84,11 @@ const DoctorSignUp = () => {
         }
 
     };
+
+    const ReturnLandingPage = () => {
+        navigate("/")
+    };
+
     const handleclick = () => {
         navigate("/doctorlogin")
 
@@ -96,8 +101,14 @@ const DoctorSignUp = () => {
                 onSubmit={handlingSignUp}>
                 <div
                     className="w-full h-full px-7 py-5 flex-col justify-center items-center gap-5 inline-flex">
+                        <div
+                        className="ReturnHome h-50 w-40  text-white">Return Home?
+                        <br />
+                        <button className="underline" onClick={ReturnLandingPage}>click here</button>
+                    </div>
                     <div
                         className="Frame7 py-5 px-5 w-64 flex justify-center items-center gap-2.5 ">
+                            
                         <div
                             className="Login text-white text-2xl font-normal flex justify-center items-center">Sign Up as a Doctor</div>
 
@@ -150,7 +161,7 @@ const DoctorSignUp = () => {
                 </button>
             </div>
         </div>
-                    {<div className="text-red-500">{   emailError }</div>}
+                    {<div className="text-red-500">{emailError }</div>}
                     {<div className="text-red-500">{passwordError  }</div>}
                  
                     <button
@@ -160,9 +171,9 @@ const DoctorSignUp = () => {
                             onSubmit={handlingSignUp}>Sign Up</div>
                     </button>
                     <div
-                        className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">HAVE AN ACCOUNT ?
+                        className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">Already a user?
                         <br />
-                        <button className="underline" onClick={handleclick}>Click here</button>
+                        <button className="underline" onClick={handleclick}>LOGIN</button>
                     </div>
                 </div>
             </form>

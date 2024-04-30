@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Logo from "../components/img/Logo.png";
 
-import { getAuth, signInWithEmailAndPassword,signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useAuth } from '../components/session/AuthContext'; // Import useAuth hook
 import { useNavigate } from 'react-router-dom';
 import DoctorImage from "../components/img/doctor il2.png";
 import { db } from '../firebase';
-import {doc,getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 const DoctorLogin = () => {
 
     const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
@@ -16,28 +16,28 @@ const DoctorLogin = () => {
     const [password, setPassword] = useState('');
 
     // Run only once on component mount
-    const handleLogin = async (email, password,type) => {
+    const handleLogin = async (email, password, type) => {
         try {
-            console.log(email,password)
+            console.log(email, password)
             const auth = getAuth();
             // Sign in user
             await signInWithEmailAndPassword(auth, email, password);
-    
+
             // Get current user
             const currentUser = auth.currentUser;
-    
+
             if (currentUser) {
                 // Get user document from Firestore
-                
-                const doctorDoc = doc(db, 'Medical Professional',currentUser.uid);
+
+                const doctorDoc = doc(db, 'Medical Professional', currentUser.uid);
                 const userDoc = await getDoc(doctorDoc);
                 console.log(userDoc._document)
-                if (userDoc._document!=null) {
-                                setUser(currentUser);
-                                setUserType(type); // Set the user type after successful sign-in
-                                localStorage.setItem('user', JSON.stringify(currentUser));
-                                localStorage.setItem('userType', type);
-                                navigate('/');
+                if (userDoc._document != null) {
+                    setUser(currentUser);
+                    setUserType(type); // Set the user type after successful sign-in
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    localStorage.setItem('userType', type);
+                    navigate('/');
                 } else {
                     // User document does not exist
 
@@ -59,42 +59,57 @@ const DoctorLogin = () => {
     const handleclick = () => {
         navigate("/doctorsignup")
     };
+
+    const ReturnLandingPage = () => {
+        navigate("/")
+    };
+
+
     return (
+
         <div
             className="MacbookPro141 w-full  h-screen bg-stone-900 flex justify-between items-center">
+
             <div
                 className="Signup bg-primary flex-grow flex-shrink flex-basis-0 self-stretch justify-center items-center gap-2.5 flex h-full">
+
                 <div
                     className="w-full h-full px-7 py-5 flex-col justify-center items-center gap-5 inline-flex">
+
+                    <div
+                        className="ReturnHome h-50 w-40  text-white">Return Home?
+                        <br />
+                        <button className="underline" onClick={ReturnLandingPage}>click here</button>
+                    </div>
+
                     <div className="Frame7 w-64 flex justify-center items-center gap-2.5 ">
                         <div
-                            className="Login text-white text-5xl font-normal flex justify-center items-center">Login</div>
-                        <div className="As text-white text-5xl font-normal">As</div>
-                        <div className="Patient text-white text-5xl font-normal">Doctor</div>
+                            className="Login text-white text-3xl font-normal flex justify-center items-center">Login As Doctor
+                        </div>
                     </div>
                     <div className="Emailflex w-full justify-start items-center gap-2.5">
                         <input value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="text"
-                            placeholder="example@gmail.com"
+                            placeholder="Enter an email account"
                             className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div>
                     <div className="Password w-full justify-start items-center gap-2.5">
                         <input value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
-                            placeholder="********"
+                            placeholder="Enter a password"
                             className="flex py-px h-12 w-full px-5 bg-white rounded-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div> {error && <div className="text-red-500">{error}</div>}
                     <button
-                        className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center"  onClick={() => handleLogin(email, password,"doctor")}>
+                        className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center" onClick={() => handleLogin(email, password, "doctor")}>
                         <div
                             className="Loginbutton text-white text-base font-normal flex justify-center items-center">Login</div>
                     </button>
                     <div
-                        className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">DONT HAVE AN ACCOUNT?
+                        className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">Need an Account?
                         <br />
-                        <button className="underline" onClick={handleclick}>Click here</button>
+                        <button className="underline" onClick={handleclick}>SIGN UP</button>
                     </div>
                 </div>
             </div>
