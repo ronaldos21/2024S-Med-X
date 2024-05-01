@@ -1,5 +1,4 @@
 import Footer from "../footer/footer";
-
 import React from 'react';
 import Topbar from "../topbar/topbar";
 import Dashboard from "../../pages/dashboard";
@@ -10,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import Images from "../../pages/images";
 import ReportGallery from "../../pages/reportgallery";
 import ReportPage from "../../pages/reportpage";
+import Profile from "../../pages/updateprofile";
 
 const Submain = () => {
     return (
@@ -22,6 +22,7 @@ const Submain = () => {
                 <Route path="/report" element={<Report />} />
                 <Route path="/reportgall" element={<ReportGallery />} />
                 <Route path="/images" element={<Images />} />
+                <Route path="/profile" element={<Profile/>}/>
                 <Route path="/reportdetails/:reportId" element={<ReportPage />} />
             </Routes>
             <Footer/>
