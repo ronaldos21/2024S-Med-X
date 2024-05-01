@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../components/img/Logo.png';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -7,9 +7,11 @@ import { db } from '../firebase'; // Import your Firebase configuration
 import { setDoc, doc } from 'firebase/firestore';
 import { useAuth } from '../components/session/AuthContext';
 import PatientImage from "../components/img/patient il2.png";
-
 import Hide from "../components/img/icons/hide.svg";
 import UnHide from "../components/img/icons/unhide.svg";
+
+
+
 const PatientSignUp = () => {
 
     const [name, setName] = useState('');
@@ -51,12 +53,18 @@ const PatientSignUp = () => {
             return;
         }
 
+        console.log('Starting sign-up process...');
+
+
         try {
+            console.log('Attempting to create user...');
             const userCredential = await createUserWithEmailAndPassword(
                 auth,
                 email,
                 password
             );
+            console.log('User created successfully:', userCredential.user.uid);
+
             const user = userCredential.user;
             const type = "patient"
             console.log('User signed up:', user.uid)
@@ -68,15 +76,34 @@ const PatientSignUp = () => {
             };
             const reportDocRef = doc(db, 'Patient', user.uid);
             await setDoc(reportDocRef, patientData);
+            console.log('User data stored successfully:', patientData);
+
             setUser(user);
             setUserType(type); // Set the user type after successful sign-in
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('userType', type);
+            
+            //works here
+            //console.log('Showing alert message...');
+            //alert('Signed up successfully! Welcome to Med-X AI, please complete your profile page');
+            
+            console.log('Redirecting to homepage...');
             navigate('/', { replace: true });
 
+    
+             //console.log('Showing alert message...');
+             alert('Signed up successfully!');
+
+        
             // Step 2: Submit the Form
             const form = e.target;
             form.submit();
+
+           
+            
+
+            
+
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
                 setEmailError("This email address is already in use.");
@@ -84,6 +111,7 @@ const PatientSignUp = () => {
                 setPasswordError(error.message);
             }
         }
+        alert('Welcome to Med-X AI, please complete your profile page');
 
     };
 
@@ -94,6 +122,7 @@ const PatientSignUp = () => {
     const handleclick = () => {
         navigate("/patientlogin")
     };
+
 
     return (<div
         className="MacbookPro141 w-full  h-screen bg-stone-900 flex justify-between items-center">
@@ -112,11 +141,11 @@ const PatientSignUp = () => {
             onSubmit={handlingSignUp}>
             <div
                 className="w-full h-full px-7 py-5 flex-col justify-center items-center gap-5 inline-flex">
-                    <div
-                        className="ReturnHome h-50 w-40  text-white">Return Home?
-                        <br />
-                        <button className="underline" onClick={ReturnLandingPage}>click here</button>
-                    </div>
+                <div
+                    className="ReturnHome h-50 w-40  text-white">Return Home?
+                    <br />
+                    <button className="underline" onClick={ReturnLandingPage}>click here</button>
+                </div>
                 <div className="Frame7 w-64 flex justify-center items-center gap-2.5 ">
                     <div
                         className="Login text-white text-2xl font-normal flex justify-center items-center">Sign Up As a Patient</div>

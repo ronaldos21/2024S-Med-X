@@ -99,14 +99,14 @@ const PatientLogin = () => {
                         <input value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="text"
-                            placeholder="example@gmail.com"
+                            placeholder="Enter an email account"
                             className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div>
                     <div className="Password w-full justify-start items-center gap-2.5">
                         <input value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
-                            placeholder="********"
+                            placeholder="Enter a password"
                             className="flex py-px h-12 w-full px-5 bg-white rounded-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div> {error && <div className="text-red-500">{error}</div>}
                     <button
