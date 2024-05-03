@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { useAuth } from '../components/session/AuthContext';
-import { collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
+import {getDoc, collection, query, orderBy, limit, getDocs, where ,doc} from 'firebase/firestore';
 import StatusButton from '../components/button/StatusButton';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const WelcomeNotification = (userName) => toast.info(`Welcome to Med-X AI, ${userName ? userName + ", " : ""}Please complete your profile page`, {
+    theme: 'colored',
+    position: 'top-right',
+    dismiss: true,
+    autoClose: 10000, 
+
+});
 
 const Dashboard = () => {
     const { userType, user } = useAuth();
@@ -24,7 +34,13 @@ const Dashboard = () => {
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach(doc => {
                     setLastScan({ id: doc.id, ...doc.data() });
+
+
+
                 });
+
+                // Fetch data from the 'Patient' collection
+             
             } catch (error) {
                 console.error("Error fetching last scan:", error);
             } finally {
@@ -34,6 +50,29 @@ const Dashboard = () => {
 
         fetchLastScan();
     }, [user.uid, userType]);
+
+    useEffect(() => {
+        const fetchPatientData = async () => {
+          try {
+            const docRef = doc(db, "Patient", user.uid);
+            const docSnap = await getDoc(docRef);
+    
+            if (docSnap.exists()) {
+              const patientName = docSnap.data().p_name; // Corrected typo here
+              console.log("Document data:", docSnap.data());
+              console.log(patientName);
+              WelcomeNotification(patientName);
+            } else {
+              console.log("No such document!");
+            }
+          } catch (error) {
+            console.error("Error fetching patient data:", error);
+          }
+        };
+    
+        fetchPatientData();
+      }, [user.uid]);
+
 
     if (loading) {
         return <div className='h-full w-full text-white inline-flex justify-center items-center'>Loading...</div>; // Render loading indicator
@@ -71,6 +110,9 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div> : "please upload a report"}
+
+                
+                <ToastContainer />
 
             </div>
         );

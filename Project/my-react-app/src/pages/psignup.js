@@ -9,8 +9,17 @@ import { useAuth } from '../components/session/AuthContext';
 import PatientImage from "../components/img/patient il2.png";
 import Hide from "../components/img/icons/hide.svg";
 import UnHide from "../components/img/icons/unhide.svg";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
+const SignedUpNotification = () => toast.success("Signed Up Successfully!", {
+    theme: 'colored',
+    position: 'top-right',
+    dismiss: true,
+    autoClose: 8000,
+
+});
 
 const PatientSignUp = () => {
 
@@ -32,6 +41,7 @@ const PatientSignUp = () => {
     const handlingSignUp = async (e) => {
         e.preventDefault();
 
+
         // Test Case: Empty Email and Password Fields
         if (email.trim() === '' || password.trim() === '') {
             setEmailError("Email and password are required fields.");
@@ -48,7 +58,7 @@ const PatientSignUp = () => {
         if (!passwordRegex.test(password)) {
             setPasswordError(
                 "Password must contain at least one uppercase letter, one special character, an" +
-                "d be at least 6 characters long."
+                "be at least 6 characters long."
             );
             return;
         }
@@ -82,27 +92,17 @@ const PatientSignUp = () => {
             setUserType(type); // Set the user type after successful sign-in
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('userType', type);
-            
-            //works here
-            //console.log('Showing alert message...');
-            //alert('Signed up successfully! Welcome to Med-X AI, please complete your profile page');
-            
+
+
             console.log('Redirecting to homepage...');
             navigate('/', { replace: true });
 
-    
-             //console.log('Showing alert message...');
-             alert('Signed up successfully!');
-
-        
             // Step 2: Submit the Form
             const form = e.target;
             form.submit();
 
-           
-            
+            //WelcomeNotification();
 
-            
 
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
@@ -111,7 +111,6 @@ const PatientSignUp = () => {
                 setPasswordError(error.message);
             }
         }
-        alert('Welcome to Med-X AI, please complete your profile page');
 
     };
 
@@ -157,7 +156,7 @@ const PatientSignUp = () => {
                         onChange={(e) => setName(e.target.value)}
                         required="required"
                         type="text"
-                        placeholder="Enter your First Name"
+                        placeholder="Enter your Full Name"
                         id="grid-first-name"
                         className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
 
@@ -216,11 +215,18 @@ const PatientSignUp = () => {
                 </div>
                 {<div className="text-red-500">{emailError}</div>}
                 {<div className="text-red-500">{passwordError}</div>}
+
+
                 <button
-                    className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center">
-                    <div
-                        className="Loginbutton text-white text-base font-normal flex justify-center items-center">Sign Up</div>
+                    className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center"
+                    onClick={SignedUpNotification}>
+                    <div className="Loginbutton text-white text-base font-normal flex justify-center items-center">
+                        Sign Up
+                    </div>
                 </button>
+
+                <ToastContainer />
+
                 <div
                     className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">Already a user?
                     <br />

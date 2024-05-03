@@ -9,6 +9,18 @@ import { useAuth } from '../components/session/AuthContext';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Hide from "../components/img/icons/hide.svg";
 import UnHide from "../components/img/icons/unhide.svg";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+const SignedUpNotification = () => toast.success("Signed Up Successfully!", {
+    theme: 'colored',
+    position: 'top-right',
+    progress: true,
+    dismiss: true,
+    autoClose: 10000,
+
+});
 const DoctorSignUp = () => {
 
     const [email, setEmail] = useState('');
@@ -165,11 +177,13 @@ const DoctorSignUp = () => {
                     {<div className="text-red-500">{passwordError}</div>}
 
                     <button
-                        className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center">
-                        <div
-                            className="Loginbutton text-white text-base font-normal flex justify-center items-center"
-                            onSubmit={handlingSignUp}>Sign Up</div>
+                        className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center"
+                        onClick={SignedUpNotification}>
+                        <div className="Loginbutton text-white text-base font-normal flex justify-center items-center">
+                            Sign Up
+                        </div>
                     </button>
+                    <ToastContainer />
                     <div
                         className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">Already a user?
                         <br />
