@@ -7,6 +7,23 @@ import { useNavigate } from 'react-router-dom';
 import DoctorImage from "../components/img/doctor il2.png";
 import { db } from '../firebase';
 import { doc, getDoc } from "firebase/firestore";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+const LoginNotification = () => toast.success("Welcome back to Med-X AI", {
+    theme: 'colored',
+    position: 'top-right',
+    dismiss: true,
+    autoClose: 8000,
+
+});
+
+
+
+
+
 const DoctorLogin = () => {
 
     const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
@@ -38,6 +55,11 @@ const DoctorLogin = () => {
                     localStorage.setItem('user', JSON.stringify(currentUser));
                     localStorage.setItem('userType', type);
                     navigate('/');
+
+                    LoginNotification();
+
+
+
                 } else {
                     // User document does not exist
 
@@ -97,7 +119,7 @@ const DoctorLogin = () => {
                     <div className="Password w-full justify-start items-center gap-2.5">
                         <input value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            type="password"
+                           
                             placeholder="Enter a password"
                             className="flex py-px h-12 w-full px-5 bg-white rounded-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div> {error && <div className="text-red-500">{error}</div>}
@@ -106,6 +128,7 @@ const DoctorLogin = () => {
                         <div
                             className="Loginbutton text-white text-base font-normal flex justify-center items-center">Login</div>
                     </button>
+                    
                     <div
                         className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">Need an Account?
                         <br />
