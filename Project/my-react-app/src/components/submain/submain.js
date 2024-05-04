@@ -16,7 +16,6 @@ const Submain = () => {
         <div className="h-full w-full flex flex-col ">
             <Topbar/>
              <Routes> 
-                {/* Render patient or doctor dashboard based on user*/}
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/medexer" element={<Medexer />} /> 
                 <Route path="/report" element={<Report />} />

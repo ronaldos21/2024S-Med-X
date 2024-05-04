@@ -69,7 +69,7 @@ const ReportGallery = () => {
 
     return (
         <div className="Frame31 w-full h-full p-7 flex-col justify-start items-start gap-2.5 inline-flex">
-            <div className="Report text-white text-5xl font-normal">Reports</div>
+            <div className="text-center text-white text-4xl font-normal font-['Inter']">Reports</div>
             <div className="Gallery flex justify-start items-start flex-wrap gap-2 p-2 ">
                 {currentReports.map((report) => (
                     <div
