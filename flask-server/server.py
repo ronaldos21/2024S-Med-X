@@ -12,11 +12,15 @@
 from flask import Flask, request, jsonify
 import requests
 from flask_cors import CORS
-from tensorflow.keras.models import load_model
-from chexpert_prediction import get_finding
+# from tensorflow.keras.models import load_model
+# from optimized_model_pred import get_finding, load_model # uncomment for new model
+from chexpert_prediction import get_finding, load_model
+
+# model_path = 'chexpert_cuda_trained_model.pth'  # use this as new model path
 
 # Load the model
 model = load_model('optimized_model.h5')
+
 
 app = Flask(__name__)
 CORS(app)
@@ -66,6 +70,7 @@ def predict():
         return jsonify({
             'prediction': {
                 'name': result['top_diagnosis'],
+                # 'description': result['description'] # uncomment for the new model
                 'description': result['predictions'][result['top_diagnosis']]['description']
             },
             'predictions': result['predictions']
