@@ -23,6 +23,7 @@ const SignedUpNotification = () => toast.success("Signed Up Successfully!", {
 });
 const DoctorSignUp = () => {
 
+    const [name, setName] = useState("");
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -65,7 +66,7 @@ const DoctorSignUp = () => {
             const userCredential = await createUserWithEmailAndPassword(
                 auth,
                 email,
-                password
+                password,
             );
             const user = userCredential.user;
             const type = "doctor"
@@ -73,7 +74,7 @@ const DoctorSignUp = () => {
             let doctorData = {
                 mp_email: email,
                 mp_password: password,
-                p_name: email,
+                p_name: name,
                 user_type: "1"
             };
             const reportDocRef = doc(db, 'Medical Professional', user.uid);
@@ -125,6 +126,20 @@ const DoctorSignUp = () => {
                             className="Login text-white text-2xl font-normal flex justify-center items-center">Sign Up as a Doctor</div>
 
                     </div>
+
+                    <div className="FirstNameflex w-full justify-start items-center gap-2.5">
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required="required"
+              type="text"
+              placeholder="Enter your Full Name"
+              id="grid-first-name"
+              className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal"
+            />
+          </div>
+
+
                     <div className="Emailflex w-full justify-start items-center gap-2.5">
                         <input
                             value={email}

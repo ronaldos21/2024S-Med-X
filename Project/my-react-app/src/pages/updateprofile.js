@@ -14,10 +14,12 @@ import {
     updateDoc
 } from "firebase/firestore";
 
+
 const Profile = () => {
     const navigate = useNavigate();
     const {userType, user} = useAuth();
     const [userData, setUserData] = useState({
+        
         mp_b_date: '', mp_sex: '', mp_number: '',
         mp_email: '',
         mp_name: '',
@@ -91,12 +93,20 @@ const Profile = () => {
                 await updateDoc(patientDoc, updatedUserData);
             }
             alert("Your information has been updated!")
-            navigate('/profile');
+            navigate('/');
         } catch (error) {
             console.error(`Error code: ${error.code}`);
             console.error(`Error message: ${error.message}`);
         }
     };
+
+   
+
+    const handleClickDashboard = () => {
+        // Navigate to the specified page
+        navigate('/');
+    };
+
 
 if (userType ==="doctor"){
 
@@ -269,8 +279,13 @@ if (userType ==="doctor"){
                     <button
                         className="Frame38 w-36 h-14 p-2.5 bg-black bg-opacity-20 rounded-2xl flex-col justify-center items-center gap-2.5 flex">
                         <div
-                            className="Submit text-center text-white text-base font-normal font-['Inter']">Submit</div>
-                    </button>
+                            className="Submit text-center text-white text-base font-normal font-['Inter']" >Submit</div>
+                            
+                    </button> 
+                    
+                    
+                   
+                    
                 </div>
             </div>
         </form>)
