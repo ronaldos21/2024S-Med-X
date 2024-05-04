@@ -33,7 +33,7 @@ const DoctorLogin = () => {
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); 
+    const [showPassword, setShowPassword] = useState(false);
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -44,12 +44,12 @@ const DoctorLogin = () => {
             const auth = getAuth();
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const currentUser = userCredential.user;
-    
+
             if (currentUser) {
                 // Check user type
                 const userTypeDocRef = doc(db, 'Medical Professional', currentUser.uid);
                 const userTypeDocSnapshot = await getDoc(userTypeDocRef);
-    
+
                 if (userTypeDocSnapshot.exists()) {
                     // Authorized user
                     setUser(currentUser);
@@ -71,7 +71,7 @@ const DoctorLogin = () => {
             setError(error.message); // Display error message to user
         }
     };
-    
+
     const handleclick = () => {
         navigate("/doctorsignup");
     };
@@ -111,36 +111,36 @@ const DoctorLogin = () => {
                             className="w-full flex h-12 px-5 py-px bg-white rounded-2xl  flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal" />
                     </div>
                     <div className="Password flex-row flex w-full justify-between items-center focus:outline-none ">
-            <div className="flex py-px h-12 w-full px-5 justify-between bg-white rounded-l-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal focus:ring-0">
-                <input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter a password"
-                    className="w-full outline-none"
-                />
-            </div>
-            <div className="h-full w-10 flex justify-center items-center rounded-r-2xl bg-customWhite py-px">
-                <button
-                    type="button"
-                    className="text-customPurple focus:outline-none"
-                    onClick={togglePasswordVisibility}
-                >
-                    {showPassword ? (
-                        <img src={Hide} alt="Hide" className="w-7 h-w-7" />
-                    ) : (
-                        <img src={UnHide} alt="Unhide" className="w-7 h-w-7" />
-                    )}
-                </button>
-            </div>
-        </div>{error && <div className="text-red-500">{error}</div>}
+                        <div className="flex py-px h-12 w-full px-5 justify-between bg-white rounded-l-2xl flex-grow flex-shrink flex-basis-0 self-stretch text-zinc-800 text-opacity-80 text-base font-normal focus:ring-0">
+                            <input
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Enter a password"
+                                className="w-full outline-none"
+                            />
+                        </div>
+                        <div className="h-full w-10 flex justify-center items-center rounded-r-2xl bg-customWhite py-px">
+                            <button
+                                type="button"
+                                className="text-customPurple focus:outline-none"
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? (
+                                    <img src={Hide} alt="Hide" className="w-7 h-w-7" />
+                                ) : (
+                                    <img src={UnHide} alt="Unhide" className="w-7 h-w-7" />
+                                )}
+                            </button>
+                        </div>
+                    </div>{error && <div className="text-red-500">{error}</div>}
                     <button
                         className="Frame8 w-36 p-2.5 bg-purple-500 rounded-2xl flex justify-center items-center" onClick={() => handleLogin(email, password, "doctor")}>
                         <div
                             className="Loginbutton text-white text-base font-normal flex justify-center items-center">Login</div>
                     </button>
-                    
+
                     <div
                         className="DontHaveAnAccountClickHere text-center text-white text-base font-normal">Need an Account?
                         <br />

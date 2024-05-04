@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { useAuth } from '../components/session/AuthContext';
-import {getDoc, collection, query, orderBy, limit, getDocs, where ,doc} from 'firebase/firestore';
+import { getDoc, collection, query, orderBy, limit, getDocs, where, doc } from 'firebase/firestore';
 import StatusButton from '../components/button/StatusButton';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,7 @@ const WelcomeNotification = (userName) => toast.info(`Welcome to Med-X AI, ${use
     theme: 'colored',
     position: 'top-right',
     dismiss: true,
-    autoClose: 10000, 
+    autoClose: 10000,
 
 });
 
@@ -40,7 +40,7 @@ const Dashboard = () => {
                 });
 
                 // Fetch data from the 'Patient' collection
-             
+
             } catch (error) {
                 console.error("Error fetching last scan:", error);
             } finally {
@@ -53,25 +53,25 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchPatientData = async () => {
-          try {
-            const docRef = doc(db, "Patient", user.uid);
-            const docSnap = await getDoc(docRef);
-    
-            if (docSnap.exists()) {
-              const patientName = docSnap.data().p_name; // Corrected typo here
-              console.log("Document data:", docSnap.data());
-              console.log(patientName);
-              WelcomeNotification(patientName);
-            } else {
-              console.log("No such document!");
+            try {
+                const docRef = doc(db, "Patient", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const patientName = docSnap.data().p_name; // Corrected typo here
+                    console.log("Document data:", docSnap.data());
+                    console.log(patientName);
+                    WelcomeNotification(patientName);
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error fetching patient data:", error);
             }
-          } catch (error) {
-            console.error("Error fetching patient data:", error);
-          }
         };
-    
+
         fetchPatientData();
-      }, [user.uid]);
+    }, [user.uid]);
 
 
     if (loading) {
@@ -111,7 +111,7 @@ const Dashboard = () => {
                     </div>
                 </div> : "please upload a report"}
 
-                
+
                 <ToastContainer />
 
             </div>
