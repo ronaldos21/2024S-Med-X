@@ -20,8 +20,12 @@ const Profile = () => {
     const [userData, setUserData] = useState({
         mp_b_date: '', mp_sex: '', mp_number: '',
         mp_email: '',
-        p_name: '',
-        mp_prof: ''
+        mp_name: '',
+        p_b_date: '',
+        p_sex: '',
+        p_number: '',
+        p_email: '',
+        p_name:''
     });
 
     useEffect(() => {
@@ -71,23 +75,30 @@ const Profile = () => {
                     mp_b_date: userData.mp_b_date || '',
                     mp_sex: userData.mp_sex || '',
                     mp_number: userData.mp_number || '',
-                    mp_city: userData.mp_city || '',
-                    mp_state: userData.mp_state || '',
-                    mp_zip: userData.mp_zip || '',
-                    mp_prof: userData.mp_prof || ''
                 };
                 await updateDoc(doctorDoc, updatedUserData);
             }
 
+            if(userType === "patient") {
+                const patientDoc = doc(db, 'Patient', user.uid);
+                const updatedUserData = {
+                    p_name: userData.p_name || '',
+                    // p_email: userData.p_email || '',
+                    p_b_date: userData.p_b_date || '',
+                    p_sex: userData.p_sex || '',
+                    p_number: userData.p_number || '',
+                }
+                await updateDoc(patientDoc, updatedUserData);
+            }
             alert("Your information has been updated!")
-            navigate('/');
+            navigate('/profile');
         } catch (error) {
             console.error(`Error code: ${error.code}`);
             console.error(`Error message: ${error.message}`);
         }
     };
 
-if (userType =="doctor"){
+if (userType ==="doctor"){
 
     return (
         <form
@@ -115,7 +126,7 @@ if (userType =="doctor"){
                             <input
                                 type="text"
                                 id="name"
-                                name="mp_name"
+                                name="mp_email"
                                 value={userData.mp_email}
                                 className="Frame38 w-full h-12 p-2.5 bg-white rounded-2xl"></input>
                         </div>
@@ -152,6 +163,7 @@ if (userType =="doctor"){
                                 name="mp_sex"
                                 id="mp_sex"
                                 onChange={handleChange}
+                                value={userData.mp_sex}
                                 className="Frame38 w-72 h-12 p-2.5 bg-white rounded-2xl">
                                 <option value="">Please choose an option</option>
                                 <option value="Male">Male</option>
@@ -200,7 +212,7 @@ if (userType =="doctor"){
                             <div className="FirstName text-white text-base font-normal font-['Inter']">Email</div>
                             <input
                                 type="text"
-                                id="name"
+                                id="p_email"
                                 name="p_email"
                                 value={userData.p_email}
                                 className="Frame38 w-full h-12 p-2.5 bg-white rounded-2xl"></input>
@@ -213,8 +225,8 @@ if (userType =="doctor"){
                             <div className="FirstName text-white text-base font-normal font-['Inter']">Full Name</div>
                             <input
                                 type="text"
-                                id="name"
-                                name="mp_name"
+                                id="p_name"
+                                name="p_name"
                                 onChange={handleChange}
                                 value={userData.p_name}
                                 className="Frame38 w-full h-12 p-2.5 bg-white rounded-2xl"></input>
@@ -226,7 +238,7 @@ if (userType =="doctor"){
                             <div className="DateOfBirth text-white text-base font-normal font-['Inter']">Date of Birth</div>
                             <input
                                 id="p_b_date"
-                                name="mp_b_date"
+                                name="p_b_date"
                                 type="date"
                                 onChange={handleChange}
                                 value={userData.p_b_date}
@@ -235,9 +247,10 @@ if (userType =="doctor"){
                         <div className="Name flex-col justify-center items-start gap-5 inline-flex">
                             <div className="Sex text-white text-base font-normal font-['Inter']">Sex</div>
                             <select
-                                name="mp_sex"
-                                id="mp_sex"
+                                name="p_sex"
+                                id="p_sex"
                                 onChange={handleChange}
+                                value={userData.p_sex}
                                 className="Frame38 w-72 h-12 p-2.5 bg-white rounded-2xl">
                                 <option value="">Please choose an option</option>
                                 <option value="Male">Male</option>
@@ -250,11 +263,11 @@ if (userType =="doctor"){
                         className="Details self-stretch justify-start items-center gap-5 inline-flex">
                         <div className="Name flex-col justify-center items-start gap-5 inline-flex">
                             <div className="ContactNumber text-white text-base font-normal font-['Inter']">Contact Number</div>
-                            <input type="tel" id="mp_number" name="mp_number" onChange={handleChange} value={userData.mp_number} placeholder="718-123-7698" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" className="Frame38 w-72 h-12 p-2.5 bg-white rounded-2xl"/>
+                            <input type="tel" id="p_number" name="p_number" onChange={handleChange} value={userData.p_number} placeholder="718-123-7698" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" className="Frame38 w-72 h-12 p-2.5 bg-white rounded-2xl"/>
                         </div>
                     </div>
                     <button
-                        className="Frame38 w-36 h-12 p-2.5 bg-black bg-opacity-20 rounded-2xl flex-col justify-center items-center gap-2.5 flex">
+                        className="Frame38 w-36 h-14 p-2.5 bg-black bg-opacity-20 rounded-2xl flex-col justify-center items-center gap-2.5 flex">
                         <div
                             className="Submit text-center text-white text-base font-normal font-['Inter']">Submit</div>
                     </button>
