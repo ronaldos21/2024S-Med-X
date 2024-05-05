@@ -57,6 +57,7 @@ const Notification = () => {
     },[notifications]);
 
 
+    {/*
     const addNotification = async (notificationData) => {
         try {
             await addDoc(collection(db, "Notifications"), notificationData);
@@ -64,10 +65,11 @@ const Notification = () => {
             console.error("Error adding notification: ", e);
         }
     };
+*/}
 
 
 
-    { /*
+    
 
     const addNotification = async (notificationData) => {
         try {
@@ -78,7 +80,7 @@ const Notification = () => {
         }
     };
 
-*/}
+
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
