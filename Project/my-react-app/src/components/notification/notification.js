@@ -10,6 +10,7 @@ const Notification = () => {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
+    const [isDataFetched, setIsDataFetched] = useState(false); 
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -20,41 +21,64 @@ const Notification = () => {
     }, []);
 
     useEffect(() => {
-        // Set up listener for changes in x-ray database
-        const q = query(collection(db, "X-ray"));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "modified") {
-                    // Create a notification and upload it to the notification table
-                    const notificationData = {
-                        id: change.doc.id,
-                        reportid: change.doc.id,
-                        date: new Date().toLocaleString(),
-                        status: "Reviewing", // Assuming initial status is "Reviewing"
-                        message: "New x-ray report added" // You can customize this message
-                    };
-                    //addNotification(notificationData); old
-                    //console.log(notificationData) old 
+        const fetchData = async () => {
+            // Retrieve notifications from local storage on component mount
+            const storedNotifications = JSON.parse(localStorage.getItem('Notifications'));
+            if (storedNotifications) {
+                setNotifications(storedNotifications);
+            }
 
-
-                    setNotifications(prevNotifications => [...prevNotifications, notificationData]); // Update notifications state
-                    console.log(setNotifications);
-                    addNotification(notificationData);
-                    console.log(addNotification);
-                }
+            // Set up listener for changes in x-ray database
+            const q = query(collection(db, "X-ray"));
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "modified") {
+                        const notificationData = {
+                            reportid: change.doc.id,
+                            date: new Date().toLocaleString(),
+                            status: "Reviewing",
+                            message: "New x-ray report added"
+                        };
+                        setNotifications(prevNotifications => [...prevNotifications, notificationData]);
+                        addNotification(notificationData);
+                    }
+                });
             });
-        });
-        return () => unsubscribe();
+            setIsDataFetched(true); // Set the flag to indicate data has been fetched
+            return () => unsubscribe();
+        };
+
+        fetchData();
     }, [user]);
+
+    useEffect(() => {
+        // Store notifications in local storage whenever it changes
+     localStorage.setItem('Notifications', JSON.stringify(notifications));
+    },[notifications]);
+
 
     const addNotification = async (notificationData) => {
         try {
-            const docRef = await addDoc(collection(db, "Notifications"), notificationData);
-            console.log("Notification added with ID: ", docRef.id);
+            await addDoc(collection(db, "Notifications"), notificationData);
         } catch (e) {
             console.error("Error adding notification: ", e);
         }
     };
+
+
+
+    { /*
+
+    const addNotification = async (notificationData) => {
+        try {
+            const docRef = await addDoc(collection(db, "Notifications"), notificationData);
+            console.log("Notification added with ID #: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding notification: ", e);
+        }
+    };
+
+*/}
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -83,28 +107,37 @@ const Notification = () => {
                 )}
             </div>
             {isDropdownOpen && (
-                <div className="absolute top-full right-2 mt-1 w-[400px] bg-primary p-3 shadow-lg rounded-lg">
+                <div className="absolute top-full right-2 mt-1 w-auto bg-primary p-3 shadow-lg rounded-lg">
                     <ul className='gap-2.5'>
                         {notifications.map(notification => (
 
                             <li key={notification.id} onClick={() => handlenavigate(notification.reportid)}>
                                 <div className="Notification w-full h-16 justify-center items-center gap-2.5 inline-flex">
+                                    
+                                    {/*
                                     <div className="NotificationBell p-2.5 bg-stone-900 rounded-2xl justify-center items-center gap-2.5 flex">
+
+                                        
                                         <div className="Icon rounded-2xl justify-center items-center flex">
                                             <div className="Bell w-11 h-11 relative bg-black bg-opacity-0" />
                                         </div>
+                                        
+
+
                                     </div>
-                                    <div className="Details grow shrink basis-0 p-2.5 bg-stone-900 rounded-2xl flex-col justify-center items-start gap-1 inline-flex">
+                                    */}
+                                    
+                                    <div className="Details grow shrink basis-0 p-2.5 bg-stone-900 rounded-2xl flex-col justify-center items-start gap-1">
                                         <div className="Frame7 self-stretch justify-between items-center inline-flex">
                                             <div className="Frame5 
                                             justify-start items-start gap-2.5 flex">
                                                 <div>
-                                                    <span className="text-indigo-200 text-base font-normal">Report ID #: </span>
+                                                    <span className="text-indigo-300 text-base font-normal ">Report ID: </span>
                                                     <span className="text-white text-base font-normal">{notification.reportid}</span>
                                                     <span className="text-indigo-300 text-base font-normal"> </span>
                                                 </div>
                                                 <span className="text-indigo-300 text-base font-normal">Date: </span>
-                                                <div className="Report text-indigo-300 text-base font-normal">{notification.date}</div>
+                                                <div className="Report text-white text-base font-normal">{notification.date}</div>
                                                 <span className="text-indigo-300 text-base font-normal">Report Status: </span>
                                                 <div className="ReportStatus text-base font-normal text-white">{notification.status === "1" ? "Reviewed" : "Reviewing"}</div>
                                             </div>
