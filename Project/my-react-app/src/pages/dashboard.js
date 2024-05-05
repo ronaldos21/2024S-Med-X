@@ -19,7 +19,7 @@ const Dashboard = () => {
     const [lastScan, setLastScan] = useState(null);
     const [loading, setLoading] = useState(true); // Loading state  
     // const [welcome, setWelcome] = useState(false)  default value should be false (it will be changed to true when prop as true coming from signup page) @ronaldos21
-   // add line 63 here with condition if welcome = true(this value is coming from singup as prop refer exapmle screen shot) {line 63} @ronaldos21
+    // add line 63 here with condition if welcome = true(this value is coming from singup as prop refer exapmle screen shot) {line 63} @ronaldos21
     useEffect(() => {
         const fetchLastScan = async () => {
             try {
@@ -60,7 +60,7 @@ const Dashboard = () => {
                     const patientName = docSnap.data().p_name; // Corrected typo here
                     console.log("Document data:", docSnap.data());
                     console.log(patientName);
-                    WelcomeNotification(patientName);//remove this from here       @ronaldos21
+                    //WelcomeNotification(patientName);//remove this from here       @ronaldos21
                 } else {
                     console.log("No such document!");
                 }

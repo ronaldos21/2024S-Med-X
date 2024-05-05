@@ -24,16 +24,23 @@ const Notification = () => {
         const q = query(collection(db, "X-ray"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             snapshot.docChanges().forEach((change) => {
-                if ( change.type === "modified") {
+                if (change.type === "modified") {
                     // Create a notification and upload it to the notification table
                     const notificationData = {
+                        id: change.doc.id,
                         reportid: change.doc.id,
                         date: new Date().toLocaleString(),
                         status: "Reviewing", // Assuming initial status is "Reviewing"
                         message: "New x-ray report added" // You can customize this message
                     };
+                    //addNotification(notificationData); old
+                    //console.log(notificationData) old 
+
+
+                    setNotifications(prevNotifications => [...prevNotifications, notificationData]); // Update notifications state
+                    console.log(setNotifications);
                     addNotification(notificationData);
-                    console.log(notificationData)
+                    console.log(addNotification);
                 }
             });
         });
@@ -63,6 +70,7 @@ const Notification = () => {
         navigate('reportdetails/' + url);
     };
 
+
     return (
         <div className="relative h-full" ref={dropdownRef}>
             <div className="flex justify-center items-center gap-1 bg-neutral-900 rounded-full h-full p-1.5">
@@ -78,7 +86,7 @@ const Notification = () => {
                 <div className="absolute top-full right-2 mt-1 w-[400px] bg-primary p-3 shadow-lg rounded-lg">
                     <ul className='gap-2.5'>
                         {notifications.map(notification => (
-                          
+
                             <li key={notification.id} onClick={() => handlenavigate(notification.reportid)}>
                                 <div className="Notification w-full h-16 justify-center items-center gap-2.5 inline-flex">
                                     <div className="NotificationBell p-2.5 bg-stone-900 rounded-2xl justify-center items-center gap-2.5 flex">
@@ -88,19 +96,22 @@ const Notification = () => {
                                     </div>
                                     <div className="Details grow shrink basis-0 p-2.5 bg-stone-900 rounded-2xl flex-col justify-center items-start gap-1 inline-flex">
                                         <div className="Frame7 self-stretch justify-between items-center inline-flex">
-                                            <div className="Frame5 j
-                                            ustify-start items-start gap-2.5 flex">
+                                            <div className="Frame5 
+                                            justify-start items-start gap-2.5 flex">
                                                 <div>
-                                                    <span className="text-indigo-300 text-base font-normal">Report: </span>
+                                                    <span className="text-indigo-200 text-base font-normal">Report ID #: </span>
                                                     <span className="text-white text-base font-normal">{notification.reportid}</span>
                                                     <span className="text-indigo-300 text-base font-normal"> </span>
                                                 </div>
+                                                <span className="text-indigo-300 text-base font-normal">Date: </span>
                                                 <div className="Report text-indigo-300 text-base font-normal">{notification.date}</div>
+                                                <span className="text-indigo-300 text-base font-normal">Report Status: </span>
                                                 <div className="ReportStatus text-base font-normal text-white">{notification.status === "1" ? "Reviewed" : "Reviewing"}</div>
                                             </div>
                                             <div className="Frame6" />
                                         </div>
-                                        <div className="self-stretch text-white text-base font-normal">Doctor:{notification.message}</div>
+                                        <span className="text-indigo-300 text-base font-normal">Doctor's comment: </span>
+                                        <div className="self-stretch text-white text-base font-normal">{notification.message}</div>
                                     </div>
                                 </div>
                             </li>
