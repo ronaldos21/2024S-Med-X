@@ -21,18 +21,9 @@ const Notification = () => {
 
     useEffect(() => {
         // Set up listener for changes in x-ray database
-        const xraysRef = query(collection(db, "X-ray"));
-        let q;
+        const q = query(collection(db, "X-ray"));
 
-
-        if(user === "patient") {
-            q = query(xraysRef, where("p_id", "==", user.id));
-
-        }else if(user === "doctor") {
-            q = query(xraysRef, where(""))
-
-        }
-
+        
         const unsubscribe = onSnapshot(q, (snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 const modifiedData = change.doc.data();
