@@ -10,7 +10,6 @@ const Notification = () => {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
-    const [isDataFetched, setIsDataFetched] = useState(false); 
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -21,55 +20,45 @@ const Notification = () => {
     }, []);
 
     useEffect(() => {
-        const fetchData = async () => {
-            // Retrieve notifications from local storage on component mount
-            const storedNotifications = JSON.parse(localStorage.getItem('Notifications'));
-            if (storedNotifications) {
-                setNotifications(storedNotifications);
-            }
-
-            // Set up listener for changes in x-ray database
-            const q = query(collection(db, "X-ray"));
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === "modified") {
-                        const notificationData = {
-                            reportid: change.doc.id,
-                            date: new Date().toLocaleString(),
-                            status: "Reviewing",
-                            message: "New x-ray report added"
-                        };
-                        setNotifications(prevNotifications => [...prevNotifications, notificationData]);
-                        addNotification(notificationData);
-                    }
-                });
-            });
-            setIsDataFetched(true); // Set the flag to indicate data has been fetched
-            return () => unsubscribe();
-        };
-
-        fetchData();
-    }, [user]);
-
-    useEffect(() => {
-        // Store notifications in local storage whenever it changes
-     localStorage.setItem('Notifications', JSON.stringify(notifications));
-    },[notifications]);
+        // Set up listener for changes in x-ray database
+        const xraysRef = query(collection(db, "X-ray"));
+        let q;
 
 
-    {/*
-    const addNotification = async (notificationData) => {
-        try {
-            await addDoc(collection(db, "Notifications"), notificationData);
-        } catch (e) {
-            console.error("Error adding notification: ", e);
+        if(user === "patient") {
+            q = query(xraysRef, where("p_id", "==", user.id));
+
+        }else if(user === "doctor") {
+            q = query(xraysRef, where(""))
+
         }
-    };
-*/}
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                const modifiedData = change.doc.data();
+                const documentId = change.doc.id;
+                if (change.type === "modified") {
+                    // Create a notification and upload it to the notification table
+                    const notificationData = {
+                        //id: change.doc.id,
+                        reportid: documentId,
+                        date: new Date().toLocaleString(),
+                        status: modifiedData.status, // Assuming initial status is "Reviewing"
+                        message: modifiedData.mp_comment // You can customize this message
+                    };
+                    //addNotification(notificationData); old
+                    //console.log(notificationData) old 
 
 
-
-    
+                    setNotifications(prevNotifications => [...prevNotifications, notificationData]); // Update notifications state
+                    console.log(setNotifications);
+                    addNotification(notificationData);
+                    console.log(addNotification);
+                }
+            });
+        });
+        return () => unsubscribe();
+    }, [user]);
 
     const addNotification = async (notificationData) => {
         try {
@@ -79,8 +68,6 @@ const Notification = () => {
             console.error("Error adding notification: ", e);
         }
     };
-
-
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
