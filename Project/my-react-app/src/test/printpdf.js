@@ -2,6 +2,7 @@ import React from 'react';
 
 import Logo from '../components/img/Logo.png';
 class PrintableReport extends React.Component {
+    
   render() {
     const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname,desc } = this.props;
 
@@ -17,7 +18,12 @@ class PrintableReport extends React.Component {
   handlePrint = () => {
     
     const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname,desc } = this.props;
-    let statusText = status === "1" ? "Reviewed" : "Reviewing";
+
+    
+    let statusText = status === 1 ? "Reviewed" : "Reviewing";
+
+    
+    
     const pdfContent = `<!DOCTYPE html>
     <html lang="en">
     <head>
