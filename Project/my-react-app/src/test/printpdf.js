@@ -15,11 +15,11 @@ class PrintableReport extends React.Component {
     );
   }
 
-  handlePrint = () => {
+  handlePrint = () => { 
     
     const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname,desc } = this.props;
 
-    
+
     let statusText = status === 1 ? "Reviewed" : "Reviewing";
 
     
