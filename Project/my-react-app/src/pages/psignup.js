@@ -54,7 +54,7 @@ const PatientSignUp = () => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{6,})/;
     if (!passwordRegex.test(password)) {
       setPasswordError(
-        "Password must contain at least one uppercase letter, one special character, an" +
+        "Password must contain at least one uppercase letter, one special character, and" +
           "be at least 6 characters long."
       );
       return;
