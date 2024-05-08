@@ -63,13 +63,13 @@ const ReportGallery = () => {
         // Handle click event, for example, navigate to a detail page
         //const reportId = report;
         //navigate(`/reportdetails/${report.id}/${report.data.medical_term}`);
-        
+
         navigate(`/reportdetails/${report}`);
     };
 
     return (
         <div className="Frame31 w-full h-full p-7 flex-col justify-start items-start gap-2.5 inline-flex">
-            <div className="Report text-white text-5xl font-normal">Reports</div>
+            <div className="text-center text-white text-4xl font-normal font-['Inter']">Reports</div>
             <div className="Gallery flex justify-start items-start flex-wrap gap-2 p-2 ">
                 {currentReports.map((report) => (
                     <div
@@ -96,7 +96,7 @@ const ReportGallery = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                 ))}
             </div>
             {/* Pagination controls */}

@@ -2,8 +2,9 @@ import React from 'react';
 
 import Logo from '../components/img/Logo.png';
 class PrintableReport extends React.Component {
+    
   render() {
-    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname } = this.props;
+    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname,desc } = this.props;
 
     return (
            <div className='group'>
@@ -14,10 +15,15 @@ class PrintableReport extends React.Component {
     );
   }
 
-  handlePrint = () => {
+  handlePrint = () => { 
     
-    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname } = this.props;
-    let statusText = status === "1" ? "Reviewed" : "Reviewing";
+    const { result, url, formattedDate, userType, user, nextReportId, showPopup, handleOKClick,comment,status,pname,desc } = this.props;
+
+
+    let statusText = status === 1 ? "Reviewed" : "Reviewing";
+
+    
+    
     const pdfContent = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -76,7 +82,7 @@ class PrintableReport extends React.Component {
                 </div>
                 <div class="ResultRow" style="flex: 1 1 0; align-self: stretch; padding: 20px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex;">
                     <div class="Results" style="text-align: center; font-size: 32px; word-wrap: break-word;">${result}</div>
-                    <div class="HoremIpsumDolorSitAmetConsecteturAdipiscingElitEtiamEuTurpisMolestieDictumEstAMattisTellusSedDignissimMetusNecFringillaAccumsanRisusSemSollicitudinLacusUtInterdumTellusElitSedRisusMaecenasEgetCondimentumVelit" style="text-align: justify; font-size: 16px; word-wrap: break-word;">Horem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit</div>
+                    <div class="" style="text-align: justify; font-size: 16px; word-wrap: break-word;">${desc}</div>
                 </div>
             </div>
         </div>

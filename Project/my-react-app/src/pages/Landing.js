@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import Logo from '../components/img/Logo.png';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from '../components/session/AuthContext'; // Import useAuth hook
-import Devider from  '../components/img/image 3.png'
+import Devider from '../components/img/image 3.png'
 import Doctor from '../components/img/doctor il.png'
 import Patient from '../components/img/patient il.png'
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Landing = () => {
   const { setUser, setUserType } = useAuth(); // Access setUser and setUserType from AuthContext
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,33 +18,13 @@ const Login = () => {
       setUserType(userType);
       navigate('/', { replace: true });
     }
-  }, []); // Run only once on component mount
-
-  const signInAs = (email, password, type) => {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-        setUserType(type); // Set the user type after successful sign-in
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('userType', type);
-        navigate('/', { replace: true });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
-
-  const signInAsDoctor = () => {
-    signInAs("patricia.normann@presbytarian.org", "3451231", "doctor");
-  };
-
+  }, []);
   const signInAsPatient = () => {
-    signInAs("afernandez@gmail.com", "123456", "patient");
+    navigate('/patientlogin')
   };
-
+  const signInAsDoctor = () => {
+    navigate('/doctorlogin')
+  };
   return (
     <div className="Preview w-full h-screen flex-col justify-center items-center gap-2.5 inline-flex bg-primary">
       <div className="Logo flex-col justify-start items-start gap-7 flex">
@@ -74,4 +52,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Landing;

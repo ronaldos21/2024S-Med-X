@@ -5,16 +5,14 @@ import Medexericon from "../img/icons/medex-w";
 
 import { MdDashboard } from "react-icons/md";
 import { TbReportMedical } from "react-icons/tb";
-
+//import { IoMdPerson } from "react-icons/io";
 
 const Navbar = () => {// Access user from AuthContext
 
     const [isDashboardActive, setIsDashboardActive] = useState(true);
     const [isMedexerActive, setIsMedexerActive] = useState(false);
     const [isReportActive, setIsReportActive] = useState(false);
-    //const [isReportdActive, setIsReportdActive] = useState(false);
-    //const [isImagesActive, setIsImagesActive] = useState(false);
-    //const [isAPItestActive, setIsAPItestActive] = useState(false);
+    //const [isUserActive, setIsUserActive] = useState(false);
 
     const activeClassName = 'text-white';
     const normalLink = 'text-customBasewhite-30';
@@ -43,9 +41,8 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsDashboardActive(true);
                                         setIsMedexerActive(false);
                                         setIsReportActive(false);
-                                       // setIsReportdActive(false);
-                                       //setIsImagesActive(false);
-                                        //setIsAPItestActive(false);
+                                        //setIsUserActive(false);
+
                                     }}
                                 >Dashboard</NavLink>
                             </div>
@@ -57,15 +54,14 @@ const Navbar = () => {// Access user from AuthContext
                             </div>
                             <div>
                                 <NavLink
-                                    to="/medexer"
+                                    to="medexer"
                                     className={isMedexerActive ? activeClassName : normalLink}
                                     onClick={() => {
                                         setIsDashboardActive(false);
                                         setIsMedexerActive(true);
                                         setIsReportActive(false);
-                                        //setIsReportdActive(false);
-                                        //setIsImagesActive(false);
-                                        //setIsAPItestActive(false);
+                                        //setIsUserActive(false);
+
                                     }}
                                 >Medexer</NavLink>
                             </div>
@@ -82,67 +78,40 @@ const Navbar = () => {// Access user from AuthContext
                                         setIsDashboardActive(false);
                                         setIsMedexerActive(false);
                                         setIsReportActive(true);
+                                        //setIsUserActive(false);
+
+                                    }}
+                                >Report</NavLink>
+                            </div>
+                        </div>
+
+
+                      
+                        {/* in the works for the future TBA
+                        <div className="w-fit justify-start items-center gap-3 inline-flex">
+                            <div className="w-[20px] h-[20px] ">
+                                <IoMdPerson className={`${isUserActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
+
+                            </div>
+
+                            <div>
+                                <NavLink
+                                    to="/profile"
+                                    className={isUserActive ? activeClassName : normalLink} onClick={() => {
+                                        setIsDashboardActive(false);
+                                        setIsMedexerActive(false);
+                                        setIsReportActive(false);
+                                        setIsUserActive(true);
                                         //setIsReportdActive(false);
                                         //setIsImagesActive(false);
                                         //setIsAPItestActive(false);
                                     }}
-                                >Report</NavLink>
+                                >Profile</NavLink>
                             </div>
+                                
                         </div>
-                        {/* <div className="w-fit justify-start items-center gap-3 inline-flex">
-                            <div className="w-[20px] h-[20px] relative">
-                                <TbReportMedical className={`${isReportActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
-                            </div>
-                            <div>
-                                <NavLink
-                                    to="/report"
-                                    className={isReportActive ? activeClassName : normalLink}
-                                    onClick={() => {
-                                        setIsDashboardActive(false);
-                                        setIsMedexerActive(false);
-                                        setIsReportActive(true);
-                                        setIsImagesActive(false);
-                                        setIsAPItestActive(false);
-                                    }}
-                                >Report</NavLink>
-                            </div>
-                        </div>
-                        <div className="w-fit justify-start items-center gap-3 inline-flex">
-                            <div className="w-[20px] h-[20px] relative">
-                                <TbReportMedical className={`${isImagesActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
-                            </div>
-                            <div>
-                                <NavLink
-                                    to="/images"
-                                    className={isImagesActive ? activeClassName : normalLink}
-                                    onClick={() => {
-                                        setIsDashboardActive(false);
-                                        setIsMedexerActive(false);
-                                        setIsReportActive(false);
-                                        setIsImagesActive(true);
-                                        setIsAPItestActive(false);
-                                    }}
-                                >Images</NavLink>
-                            </div>
-                        </div>
-                        <div className="w-fit justify-start items-center gap-3 inline-flex">
-                            <div className="w-[20px] h-[20px] relative">
-                                <TbReportMedical className={`${isAPItestActive ? activeClassName : normalLink} w-[20px] h-[20px]`} />
-                            </div>
-                            <div>
-                                <NavLink
-                                    to="/apitest"
-                                    className={isAPItestActive ? activeClassName : normalLink}
-                                    onClick={() => {
-                                        setIsDashboardActive(false);
-                                        setIsMedexerActive(false);
-                                        setIsReportActive(false);
-                                        setIsImagesActive(false);
-                                        setIsAPItestActive(true);
-                                    }}
-                                >APItest</NavLink>
-                            </div>
-                        </div> */}
+                        */}
+
                     </div>
                 </div>
             </div>
